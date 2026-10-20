@@ -1,0 +1,32 @@
+KRERSN STUDIO EDİTÖR – GITHUB'A YÜKLEME (5 dk)
+
+1) github.com'a "krersn" hesabınla gir → sağ üst "+" → "New repository"
+   - Repository name: krersn-studio-editor
+   - Description: Tek HTML dosyasıyla çalışan açık kaynak fotoğraf editörü
+   - Public seç
+   - "Add a README" / license / .gitignore İŞARETLEME (dosyalar hazır)
+   - Create repository
+
+2) Açılan sayfada "uploading an existing file" linkine tıkla.
+   Bu klasördeki şunları sürükle-bırak:
+   index.html, README.md, LICENSE, .gitignore ve docs klasörü (4 ekran görüntüsü)
+   (GITHUB_YUKLEME_REHBERI.txt dosyasını yükleme)
+   → Commit message: "İlk açık kaynak sürüm" → Commit changes
+
+   Not: .gitignore gizli dosya olduğu için Windows'ta görünmeyebilir; yüklemesen de olur.
+
+3) Tarayıcıda denenebilir olsun (GitHub Pages):
+   Repo → Settings → Pages → Source: "Deploy from a branch"
+   → Branch: main, klasör: / (root) → Save
+   1-2 dk sonra çalışır:
+   https://krersn.github.io/krersn-studio-editor/
+   (krersn.github.io sitende özel alan adı olduğu için bu adres otomatik
+    krersnstudio.com/krersn-studio-editor/ adresine yönlenebilir; ikisi de çalışır.)
+
+4) Repo ana sayfasında sağdaki "About" çarkı:
+   - Website: yukarıdaki Pages adresi
+   - Topics: photo-editor, html, javascript, canvas, open-source, turkish
+
+Video/açıklamadaki link:  https://github.com/krersn/krersn-studio-editor
+
+Güvenlik kontrolü yapıldı: kodda API anahtarı, token, sunucu adresi veya kişisel bilgi yok.
