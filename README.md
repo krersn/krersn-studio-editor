@@ -1,8 +1,8 @@
 # Krersn Studio Editör
 
-**Tek HTML dosyasıyla çalışan, açık kaynak fotoğraf düzenleyici.** Kurulum yok, sunucu yok: dosyayı tarayıcıda açman yeterli.
+**Tarayıcıda çalışan, açık kaynak fotoğraf düzenleyici.** Kurulum yok, sunucu yok: linke tıkla ve kullan. Telefonda ve bilgisayarda çalışır, ana ekrana uygulama olarak eklenebilir.
 
-🔗 **Hemen dene:** https://krersn.github.io/krersn-studio-editor/
+🔗 **Hemen dene:** https://krersnstudio.com/krersn-studio-editor/
 
 ![Krersn Studio Editör](docs/ekran-genel.png)
 
@@ -18,7 +18,13 @@
 - **Proje:** katmanlarıyla `.krersn` olarak kaydet ve aç, çoklu sekme, geri al geçmişi
 - **Dışa aktarma:** PNG, JPG, WebP, PNG-8; boyut ve kalite ayarı, istediğin dosya adı
 - **Vektöre çevir (SVG):** logo ve düz renkli grafikleri kapalı konturlu, delikleri korunan SVG'ye çevirir
-- **Görsel yerleştirme:** tek tuşla Sığdır (F) veya Doldur (Shift+F), oran bozulmaz; Geri ve İptal butonları
+- **Görsel yerleştirme:** tek tuşla Sığdır (F) veya Doldur (Shift+F), oran bozulmaz; **döndürme** (kol ile veya ±90°, Shift = 15° adım), **yuvarlak köşe**; Geri ve İptal butonları
+- **Mobil uyum:** dokunmatik çizim, iki parmakla yakınlaştır/kaydır, açılır panel, dikey ekrana göre yerleşim
+- **Uygulama olarak yükle (PWA):** 📲 Yükle ile ana ekrana ekle; internetsiz de açılır
+- **Otomatik kayıt:** çalışman tarayıcıya kaydedilir; sayfa kapanırsa açılışta geri yükleme sorar
+- **Hazır şablonlar:** Shorts/Reels/TikTok 1080×1920, YouTube kapak, Play öne çıkan 1024×500, Play ikon 512×512, Play ekran görüntüleri
+- **▦ Güvenli alan kılavuzu:** Shorts arayüz bölgeleri, Play öne çıkan görsel ve ikon maskesi (dışa aktarmaya dahil olmaz)
+- **⭐ Logo / filigran:** logonu bir kez seç, tek dokunuşla köşeye veya ortaya yerleştir
 - **Pano:** Ctrl+C / Ctrl+X / Ctrl+V (ekran görüntüsü de yapıştırabilirsin)
 
 | Akıllı silgi | Eğriler | Leke düzeltme |
@@ -27,9 +33,11 @@
 
 ## Kullanım
 
-1. `index.html` dosyasını indir.
-2. Chrome, Edge veya Firefox ile aç.
-3. **✚ Yeni Tuval** ile başla ya da bir resmi sürükleyip bırak.
+1. **[Editörü aç](https://krersnstudio.com/krersn-studio-editor/)** — Chrome, Edge, Firefox veya Safari (telefon dahil).
+2. **✚ Yeni Tuval** ile başla ya da bir resmi sürükleyip bırak.
+3. İstersen 📲 **Yükle** ile uygulama olarak ekle.
+
+Çevrimdışı kullanmak için `index.html` dosyasını indirip doğrudan da açabilirsin (bu durumda PWA ve otomatik kayıt tarayıcıya göre sınırlı olabilir).
 
 `F1` tuşu tüm kısayolları gösterir.
 
@@ -48,7 +56,9 @@
 ## Bilinen eksikler
 
 - **Vektöre Çevir (SVG)** logo ve düz grafiklerde iyi sonuç verir; fotoğraflarda sonuç posterize (bantlı) görünür.
-- Dokunmatik ekranda çizim/seçim çalışır; iki parmakla yakınlaştırma henüz yok. Masaüstü tarayıcı için tasarlandı.
+- Telefonda klavye kısayolları yok; aynı işler butonlarla yapılır (klon kaynağı için **🎯 Kaynak Seç**).
+- Otomatik kayıt tarayıcının kendi depolamasındadır; tarayıcı verilerini silersen gider. Önemli işleri `.krersn` proje dosyası olarak da kaydet.
+- Güvenli alan kılavuzları yaklaşıktır; platformların arayüzü zamanla değişebilir.
 
 ## Katkı
 
@@ -66,4 +76,4 @@ Hata bildirimi ve önerileri **Issues** sekmesinden açabilirsin. Değişiklik y
 
 ## English
 
-**Krersn Studio Editor** is a free, open-source photo editor in a single HTML file: no install, runs entirely in your browser. It has layers, smart eraser, curves, unsharp mask, clone stamp, spot healing, `.krersn` project files and PNG/JPG/WebP export. Open `index.html` in a modern browser to start. Licensed under MIT.
+**Krersn Studio Editor** is a free, open-source photo editor in a single HTML file: no install, runs entirely in your browser. It has layers, smart eraser, curves, unsharp mask, clone stamp, spot healing, image rotation, `.krersn` project files and PNG/JPG/WebP export. Works on phones (touch drawing, pinch zoom), installs as a PWA, autosaves to the browser and ships Shorts / Google Play templates with safe-area guides. Try it: https://krersnstudio.com/krersn-studio-editor/ Licensed under MIT.

@@ -2,7 +2,21 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Krersn Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#131316">
+<meta name="description" content="Krersn Studio Editör — tarayıcıda çalışan ücretsiz, katmanlı fotoğraf ve görsel düzenleyici. Kurulum yok; telefonda ve bilgisayarda çalışır.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Krersn Studio">
+<meta property="og:title" content="Krersn Studio Editör">
+<meta property="og:description" content="Tarayıcıda çalışan katmanlı görsel düzenleyici — Shorts, Play Store ve sosyal medya görselleri için.">
+<meta property="og:image" content="https://krersnstudio.com/krersn-studio-editor/docs/ekran-genel.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>Krersn Studio Editör</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
@@ -199,6 +213,65 @@ kbd.kbdtag{font-size:9px;background:var(--s4);border:1px solid var(--bd);border-
 #placebar{width:max-content;max-width:calc(100% - 20px);flex-wrap:wrap;justify-content:center;}
 #placebar .pbtn{flex:0 0 auto;min-width:0;}
 #curvesSec .pbtn.on{border-color:var(--ac);background:rgba(79,110,247,.2);font-weight:700;}
+
+/* ═══ v3: Mobil / PWA / Kılavuz / Otomatik kayıt ═══ */
+html,body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}
+body{touch-action:manipulation;}
+#workspace{touch-action:none;}
+#ksPanelFab,#ksPanelScrim{display:none;}
+#btnInstall{display:none;border-color:#f59e0b;color:#fbbf24;}
+#ksGuide{position:absolute;left:0;top:0;z-index:4;pointer-events:none;overflow:visible;}
+#ksLogoMenu{display:none;position:fixed;z-index:600;background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:6px;min-width:210px;box-shadow:0 8px 32px rgba(0,0,0,.6);}
+#ksLogoMenu.open{display:block;}
+#ksLogoMenu button{display:flex;width:100%;align-items:center;gap:8px;padding:9px 10px;border:none;background:transparent;color:var(--tx);border-radius:6px;font-size:13px;cursor:pointer;text-align:left;}
+#ksLogoMenu button:hover{background:var(--s3);}
+#ksLogoMenu .ksl-prev{display:flex;align-items:center;justify-content:center;height:54px;margin:2px 4px 6px;border-radius:6px;background:repeating-conic-gradient(#555 0 25%,#777 0 50%) 0 0/12px 12px;}
+#ksLogoMenu .ksl-prev img{max-height:46px;max-width:180px;}
+#ksRestore{position:fixed;left:50%;top:56px;transform:translateX(-50%);z-index:700;background:#111;border:1.5px solid var(--ok);border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;max-width:calc(100vw - 20px);box-shadow:0 8px 32px rgba(0,0,0,.6);font-size:12px;color:var(--tx);}
+#ksRestore button{padding:7px 12px;border-radius:7px;border:1px solid var(--bd);background:var(--s3);color:var(--tx);cursor:pointer;font-size:12px;}
+#ksRestore button.ok{background:var(--ok);border-color:var(--ok);color:#06210f;font-weight:700;}
+#ksSaveSt{color:var(--tx3);}
+#placebar .pgrp{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
+#placebar .pgrp label{font-size:10px;color:var(--tx2);}
+#placebar .pgrp input[type=range]{width:80px;height:3px;cursor:pointer;}
+#placebar .pgrp > span{font-family:monospace;font-size:11px;min-width:32px;}
+#placebar .pgrp .pbtn{padding:5px 9px;}
+#placebar .pgrp + .pgrp{border-left:1px solid var(--bd);padding-left:10px;}
+.ks-tpl-title{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fbbf24;margin:2px 0 6px;}
+.pgbtn.ks-tpl{border-color:rgba(245,158,11,.35);}
+#ksSrcPick.on{background:rgba(245,158,11,.2);border-color:#f59e0b;color:#fbbf24;}
+
+@media (max-width:820px){
+  #app{height:100vh;height:100dvh;grid-template-rows:44px 30px 1fr 22px;grid-template-columns:46px 1fr;}
+  #menubar{overflow-x:auto;overflow-y:hidden;padding:0 6px;gap:5px;scrollbar-width:none;}
+  #menubar::-webkit-scrollbar{display:none;}
+  #menubar .msp{flex:0 0 4px;}
+  #menubar .logo{font-size:12px;line-height:1.05;}
+  .mbtn{padding:7px 10px;font-size:13px;flex:0 0 auto;}
+  #toolbar{padding:4px 0;}
+  .tb{width:40px;height:40px;flex:0 0 auto;}
+  .tb .tip{display:none!important;}
+  #panel{position:fixed;top:0;right:0;bottom:0;width:min(300px,88vw);z-index:450;transform:translateX(105%);transition:transform .2s ease;box-shadow:-10px 0 40px rgba(0,0,0,.6);padding-top:env(safe-area-inset-top);}
+  body.ks-panel-open #panel{transform:none;}
+  body.ks-panel-open #ksPanelScrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:440;}
+  #ksPanelFab{display:flex;position:fixed;right:10px;bottom:calc(30px + env(safe-area-inset-bottom));z-index:430;width:48px;height:48px;border-radius:50%;border:1px solid var(--ac);background:var(--s2);color:var(--tx);font-size:20px;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(0,0,0,.5);}
+  #toolopts{left:6px;right:6px;top:6px;transform:none;flex-wrap:wrap;gap:6px 10px;max-height:38vh;overflow:auto;padding:6px 8px;}
+  #toolopts input[type=range]{min-width:90px;}
+  #placebar{left:6px;right:64px;bottom:8px;transform:none;width:auto;max-width:none;padding:8px;gap:6px 8px;max-height:46vh;overflow:auto;}
+  #placebar .pbtn,#placebar button{padding:8px 10px!important;font-size:12px!important;}
+  #placebar .pgrp{flex:1 1 100%;justify-content:space-between;}
+  #placebar .pgrp + .pgrp{border-left:none;padding-left:0;}
+  #placebar .pgrp input[type=range]{flex:1 1 0;width:0;min-width:40px;height:18px;}
+  #placebar .pgrp > span{min-width:28px;}
+  #placebar .pgrp label{font-size:11px;}
+  #placeInfo{justify-content:center!important;font-size:10px;}
+  .modal{min-width:0!important;width:94vw;max-width:94vw!important;max-height:88vh;max-height:88dvh;overflow:auto;padding:16px;}
+  .preset-grid{grid-template-columns:repeat(2,1fr);}
+  #statusbar{gap:8px;font-size:9px;overflow:hidden;white-space:nowrap;padding:0 6px;}
+  #statusbar button{display:none;}
+  #textBox{left:8px!important;right:8px!important;min-width:0!important;}
+  #ksRestore{top:50px;}
+}
 </style>
 </head>
 <body>
@@ -218,10 +291,13 @@ kbd.kbdtag{font-size:9px;background:var(--s4);border:1px solid var(--bd);border-
   <div class="msep"></div>
   <button class="mbtn" onclick="deselect()">Seçimi Kaldır</button>
   <div class="msp"></div>
+  <button class="mbtn" id="btnInstall" onclick="ksInstall()" title="Uygulama olarak yükle (çevrimdışı çalışır)">📲 Yükle</button>
+  <button class="mbtn" id="btnLogo" onclick="ksLogoMenu(event)" title="Kayıtlı logonu / filigranını yerleştir">⭐ Logo</button>
+  <button class="mbtn" id="btnGuide" onclick="ksToggleGuide()" title="Güvenli alan kılavuzu (Shorts / Play / ikon)">▦ Kılavuz</button>
   <button class="mbtn" onclick="openVectorModal()" style="border-color:#7c3aed;color:#a78bfa;">🔷 Vektöre Çevir</button>
   <button class="mbtn" onclick="openExportModal()" style="border-color:#22c55e;color:#22c55e;">📤 Dışa Aktar</button>
   <button class="mbtn" onclick="openHelpModal()" style="margin-left:4px;" title="Kısayollar">❓</button>
-  <button class="mbtn" onclick="switchPanelTab('guide')" style="margin-left:2px;border-color:#f59e0b;color:#fbbf24;" title="Adım adım rehber">📖 Rehber</button>
+  <button class="mbtn" onclick="switchPanelTab('guide');ksOpenPanel()" style="margin-left:2px;border-color:#f59e0b;color:#fbbf24;" title="Adım adım rehber">📖 Rehber</button>
 </div>
 
 <!-- TAB BAR -->
@@ -295,19 +371,25 @@ kbd.kbdtag{font-size:9px;background:var(--s4);border:1px solid var(--bd);border-
   </div>
   <!-- Place bar -->
   <div id="placebar">
-    <span id="placeInfo" style="font-family:monospace;color:var(--tx);">0×0</span>
-    <span style="color:var(--bd);">|</span>
-    <label style="font-size:10px;color:var(--tx2);">Boyut:</label>
-    <input type="range" id="placeScale" min="10" max="100" value="100"
-      style="width:90px;height:3px;cursor:pointer;"
-      oninput="onPlaceScaleChange(this.value)">
-    <span id="placeScaleV" style="font-family:monospace;color:var(--ac);min-width:34px;font-size:12px;font-weight:700;">100%</span>
-    <span style="color:var(--bd);">|</span>
-    <button class="pbtn" id="pbFit"  style="padding:5px 10px;" onclick="placeFit('contain')" title="Oranı bozmadan tuvale sığdır (F)">⤢ Sığdır</button>
-    <button class="pbtn" id="pbFill" style="padding:5px 10px;" onclick="placeFit('cover')" title="Oranı bozmadan tuvali tamamen doldur (taşan kısım kırpılır)">⛶ Doldur</button>
-    <button class="pbtn" id="pbBack" style="padding:5px 10px;" onclick="placeUndo()" title="Son yerleştirme değişikliğini geri al (Ctrl+Z)" disabled>↶ Geri</button>
-    <button class="pbtn ac" style="padding:5px 14px;" onclick="commitPlace()">✓ Onayla (Enter)</button>
-    <button class="pbtn danger" style="padding:5px 10px;" onclick="cancelPlace()" title="Yerleştirmeyi iptal et (Esc)">✕ İptal</button>
+    <span id="placeInfo" class="pgrp" style="font-family:monospace;color:var(--tx);">0×0</span>
+    <span class="pgrp"><label>Boyut</label>
+      <input type="range" id="placeScale" min="10" max="100" value="100" oninput="onPlaceScaleChange(this.value)">
+      <span id="placeScaleV" style="color:var(--ac);font-weight:700;">100%</span></span>
+    <span class="pgrp"><label>◉ Köşe</label>
+      <input type="range" id="placeCorner" min="0" max="100" value="0" oninput="onPlaceCornerChange(this.value)">
+      <span id="placeCornerV" style="color:#a78bfa;">0%</span></span>
+    <span class="pgrp"><label>↻ Döndür</label>
+      <button class="pbtn" onclick="onPlaceRotateDelta(-90)" title="-90°">-90</button>
+      <input type="range" id="placeRotate" min="-180" max="180" value="0" oninput="onPlaceRotateChange(this.value)">
+      <span id="placeRotateV" style="color:#f59e0b;">0°</span>
+      <button class="pbtn" onclick="onPlaceRotateDelta(90)" title="+90°">+90</button></span>
+    <span class="pgrp">
+      <button class="pbtn" id="pbFit" onclick="placeFit('contain')" title="Oranı bozmadan tuvale sığdır (F)">⤢ Sığdır</button>
+      <button class="pbtn" id="pbFill" onclick="placeFit('cover')" title="Oranı bozmadan tuvali tamamen doldur (taşan kısım kırpılır)">⛶ Doldur</button>
+      <button class="pbtn" id="pbBack" onclick="placeUndo()" title="Son yerleştirme değişikliğini geri al (Ctrl+Z)" disabled>↶ Geri</button></span>
+    <span class="pgrp">
+      <button class="pbtn ac" style="padding:5px 14px;" onclick="commitPlace()">✓ Onayla (Enter)</button>
+      <button class="pbtn danger" onclick="cancelPlace()" title="Yerleştirmeyi iptal et (Esc)">✕ İptal</button></span>
   </div>
 </div>
 
@@ -697,6 +779,7 @@ kbd.kbdtag{font-size:9px;background:var(--s4);border:1px solid var(--bd);border-
         <input type="checkbox" id="cloneAll"> Tüm katmanlardan örnekle
       </label>
       <div id="cloneSrcLbl" style="font-size:10px;color:#fbbf24;font-family:monospace;margin-bottom:6px;">Kaynak: seçilmedi (Alt+tık)</div>
+      <button class="pbtn full ksSrcPick" onclick="ksPickCloneSrc()" style="margin-bottom:4px;">🎯 Kaynak Seç (dokun / tıkla)</button>
       <button class="pbtn full" onclick="resetCloneSrc()">↺ Kaynağı Sıfırla</button>
       <div class="tool-tip-box">
         <div>⌨ Alt + tık → kaynak</div>
@@ -725,6 +808,7 @@ kbd.kbdtag{font-size:9px;background:var(--s4);border:1px solid var(--bd);border-
         <input type="checkbox" id="healAll"> Tüm katmanlardan örnekle
       </label>
       <div id="healSrcLbl" style="font-size:10px;color:#fbbf24;font-family:monospace;margin-bottom:6px;">Kaynak: seçilmedi (Alt+tık)</div>
+      <button class="pbtn full ksSrcPick" onclick="ksPickCloneSrc()" style="margin-bottom:4px;">🎯 Kaynak Seç (dokun / tıkla)</button>
       <button class="pbtn full" onclick="resetCloneSrc()">↺ Otomatik Kaynağa Dön</button>
       <div class="tool-tip-box">
         <div>🖱 Lekeyi kısa darbelerle boya</div>
@@ -1034,6 +1118,7 @@ kbd.kbdtag{font-size:9px;background:var(--s4);border:1px solid var(--bd);border-
   <span>Tuval:<span id="stSize">—</span></span>
   <span id="stSel"></span>
   <span style="flex:1;"></span>
+  <span id="ksSaveSt"></span>
   <button onclick="openHelpModal()" style="border:none;background:transparent;color:var(--tx3);cursor:pointer;font-size:11px;padding:0 6px;" title="Yardım (F1)">❓ Kısayollar</button>
 </div>
 </div><!-- #app -->
@@ -1049,6 +1134,15 @@ kbd.kbdtag{font-size:9px;background:var(--s4);border:1px solid var(--bd);border-
       <button class="pgbtn" onclick="setNC(794,1123)"><b>A4 Dikey</b>794×1123</button>
       <button class="pgbtn" onclick="setNC(1200,630)"><b>Facebook</b>1200×630</button>
       <button class="pgbtn" onclick="setNC(2480,3508)"><b>A4 300dpi</b>2480×3508</button>
+    </div>
+    <div class="ks-tpl-title">⭐ Video & Play Store şablonları</div>
+    <div class="preset-grid">
+      <button class="pgbtn ks-tpl" onclick="ksTpl(1080,1920,1)"><b>Shorts / Reels / TikTok</b>1080×1920</button>
+      <button class="pgbtn ks-tpl" onclick="ksTpl(1280,720,1)"><b>YouTube Kapak</b>1280×720</button>
+      <button class="pgbtn ks-tpl" onclick="ksTpl(1024,500,1)"><b>Play Öne Çıkan</b>1024×500</button>
+      <button class="pgbtn ks-tpl" onclick="ksTpl(512,512,1)"><b>Play Uygulama İkonu</b>512×512</button>
+      <button class="pgbtn ks-tpl" onclick="ksTpl(1080,1920,0)"><b>Play Telefon Ekranı</b>1080×1920</button>
+      <button class="pgbtn ks-tpl" onclick="ksTpl(1920,1080,0)"><b>Play Yatay Ekran</b>1920×1080</button>
     </div>
     <div style="display:flex;gap:10px;align-items:flex-end;margin-bottom:12px;">
       <div style="flex:1;"><div class="mrow"><label>Genişlik (px)</label><input type="number" id="nc-w" value="1920" min="1" max="8000"></div></div>
@@ -1111,6 +1205,18 @@ kbd.kbdtag{font-size:9px;background:var(--s4);border:1px solid var(--bd);border-
 </div>
 
 <div id="toast"></div>
+<div id="ksPanelScrim" onclick="ksClosePanel()"></div>
+<button id="ksPanelFab" onclick="ksTogglePanel()" title="Paneli aç/kapat" aria-label="Panel">◧</button>
+<div id="ksLogoMenu">
+  <div class="ksl-prev"></div>
+  <button class="ksl-need" onclick="ksPlaceLogo('br')">↘ Sağ alta yerleştir</button>
+  <button class="ksl-need" onclick="ksPlaceLogo('bl')">↙ Sol alta yerleştir</button>
+  <button class="ksl-need" onclick="ksPlaceLogo('tr')">↗ Sağ üste yerleştir</button>
+  <button class="ksl-need" onclick="ksPlaceLogo('c')">⊙ Ortaya (filigran)</button>
+  <button onclick="ksPickLogo()">📁 Logo seç / değiştir</button>
+  <button class="ksl-need" onclick="ksRemoveLogo()" style="color:var(--danger)">🗑 Kayıtlı logoyu sil</button>
+</div>
+<input type="file" id="ksLogoInput" accept="image/*" style="display:none" onchange="ksLogoFile(this)">
 <div id="eraserCursor"></div>
 <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="loadPhotoFile(this)">
 <input type="file" id="projInput" accept=".krersn,application/json" style="display:none" onchange="loadProjectInput(this)">
@@ -1344,13 +1450,21 @@ function placeImage(img){
   if(!W) return;
   const scale=Math.min(1,W/img.width,H/img.height,2);
   const pw=img.width*scale, ph=img.height*scale;
-  placing={img,x:(W-pw)/2,y:(H-ph)/2,w:pw,h:ph,ar:img.width/img.height};
-  // Slider'ı sıfırla
+  placing={img,x:(W-pw)/2,y:(H-ph)/2,w:pw,h:ph,ar:img.width/img.height,rotation:0,cornerRadius:0};
+  // Slider'ları sıfırla
   const sl=document.getElementById('placeScale');
   if(sl){sl.value=100;document.getElementById('placeScaleV').textContent='100%';}
+  _syncPlaceRotCorner();
   document.getElementById('placebar').style.display='flex';
   updatePlaceInfo();
   render();
+}
+function _syncPlaceRotCorner(){
+  const r=placing?(placing.rotation||0):0, c=placing?(placing.cornerRadius||0):0;
+  const cr=document.getElementById('placeCorner');
+  if(cr){cr.value=c;document.getElementById('placeCornerV').textContent=c+'%';}
+  const rt=document.getElementById('placeRotate');
+  if(rt){rt.value=Math.max(-180,Math.min(180,r));document.getElementById('placeRotateV').textContent=Math.round(r)+'°';}
 }
 function updatePlaceInfo(){
   if(!placing)return;
@@ -1358,24 +1472,31 @@ function updatePlaceInfo(){
     Math.round(placing.w)+'×'+Math.round(placing.h)+' px  ·  '+
     Math.round(placing.x)+', '+Math.round(placing.y);
 }
+function _drawPlacedTo(ctx){
+  const rot=(placing.rotation||0)*Math.PI/180;
+  const crPct=placing.cornerRadius||0;
+  ctx.save();
+  ctx.translate(placing.x+placing.w/2,placing.y+placing.h/2);
+  ctx.rotate(rot);
+  if(crPct>0){
+    _roundedRectPath(ctx,-placing.w/2,-placing.h/2,placing.w,placing.h,crPct);
+    ctx.clip();
+  }
+  ctx.drawImage(placing.img,-placing.w/2,-placing.h/2,placing.w,placing.h);
+  ctx.restore();
+}
 function commitPlace(){
   if(!placing)return;
   if(placing.origLayer&&layers.indexOf(placing.origLayer)>=0){
     // Transform modu: mevcut katmana geri yaz
     const l=placing.origLayer;
     l.ctx.clearRect(0,0,W,H);
-    l.ctx.save();
-    l.ctx.translate(placing.x+placing.w/2,placing.y+placing.h/2);
-    l.ctx.drawImage(placing.img,-placing.w/2,-placing.h/2,placing.w,placing.h);
-    l.ctx.restore();
+    _drawPlacedTo(l.ctx);
     activeIdx=layers.indexOf(l);
   } else {
     // Yeni katman olarak ekle
-    const nl=mkLayer('Görsel '+(layers.length+1));
-    nl.ctx.save();
-    nl.ctx.translate(placing.x+placing.w/2,placing.y+placing.h/2);
-    nl.ctx.drawImage(placing.img,-placing.w/2,-placing.h/2,placing.w,placing.h);
-    nl.ctx.restore();
+    const nl=mkLayer(placing.layerName||('Görsel '+(layers.length+1)));
+    _drawPlacedTo(nl.ctx);
     layers.splice(activeIdx,0,nl);
   }
   placing=null;placeAction=null;
@@ -1396,49 +1517,129 @@ function cancelPlace(){
   render();
 }
 
+// ─── Yardımcı: yuvarlak köşe path ─────────────────
+function _roundedRectPath(ctx,x,y,w,h,crPct){
+  const r=Math.min(Math.abs(w),Math.abs(h))/2*(crPct/100);
+  const aw=Math.abs(w),ah=Math.abs(h);
+  const ax=w>=0?x:x+w, ay=h>=0?y:y+h;
+  ctx.beginPath();
+  ctx.moveTo(ax+r,ay);
+  ctx.lineTo(ax+aw-r,ay);
+  ctx.arcTo(ax+aw,ay,ax+aw,ay+r,r);
+  ctx.lineTo(ax+aw,ay+ah-r);
+  ctx.arcTo(ax+aw,ay+ah,ax+aw-r,ay+ah,r);
+  ctx.lineTo(ax+r,ay+ah);
+  ctx.arcTo(ax,ay+ah,ax,ay+ah-r,r);
+  ctx.lineTo(ax,ay+r);
+  ctx.arcTo(ax,ay,ax+r,ay,r);
+  ctx.closePath();
+}
+function _rotatePt(lx,ly,ang){
+  const c=Math.cos(ang),s=Math.sin(ang);
+  return[lx*c-ly*s,lx*s+ly*c];
+}
+function _localHandles(w,h){
+  return[
+    [-w/2,-h/2],[w/2,-h/2],[-w/2,h/2],[w/2,h/2],
+    [0,-h/2],[0,h/2],[-w/2,0],[w/2,0]
+  ];
+}
+// Tutamak boyutu ekran pikseline göre (zoom'dan bağımsız, dokunmatikte daha büyük)
+function _phScreen(){ return (window._ksTouch?16:9); }
+function _phHit(){ return (window._ksTouch?24:11)/(zoom||1); }
+function _phRotOff(){ return (window._ksTouch?34:22)/(zoom||1); }
+
 function drawPlaceOverlay(){
   if(!placing)return;
-  const {x,y,w,h}=placing;
+  const{x,y,w,h}=placing;
+  const rot=(placing.rotation||0)*Math.PI/180;
+  const crPct=placing.cornerRadius||0;
+  const cx=x+w/2,cy=y+h/2;
+  const z=zoom||1, lw=1.5/z;
   ovCtx.save();
+  ovCtx.translate(cx,cy);
+  ovCtx.rotate(rot);
+  ovCtx.save();
+  if(crPct>0){_roundedRectPath(ovCtx,-w/2,-h/2,w,h,crPct);ovCtx.clip();}
   ovCtx.globalAlpha=0.9;
-  ovCtx.drawImage(placing.img,x,y,w,h);
-  ovCtx.globalAlpha=1;
-  // Dashed border
-  ovCtx.strokeStyle='#fff';ovCtx.lineWidth=1.5;ovCtx.setLineDash([6,4]);
-  ovCtx.strokeRect(x,y,w,h);
-  ovCtx.setLineDash([]);
-  ovCtx.strokeStyle='#4f6ef7';ovCtx.lineWidth=1;
-  ovCtx.strokeRect(x,y,w,h);
-  const handles=getPlaceHandles();
-  handles.forEach(([hx,hy])=>{
-    const s=8;
-    ovCtx.fillStyle='#fff';ovCtx.strokeStyle='#4f6ef7';ovCtx.lineWidth=1.5;
-    ovCtx.fillRect(hx-s/2,hy-s/2,s,s);
-    ovCtx.strokeRect(hx-s/2,hy-s/2,s,s);
-  });
+  ovCtx.drawImage(placing.img,-w/2,-h/2,w,h);
   ovCtx.restore();
+  ovCtx.globalAlpha=1;
+  ovCtx.strokeStyle='rgba(255,255,255,.85)';ovCtx.lineWidth=lw;ovCtx.setLineDash([6/z,4/z]);
+  if(crPct>0){_roundedRectPath(ovCtx,-w/2,-h/2,w,h,crPct);ovCtx.stroke();}
+  else ovCtx.strokeRect(-w/2,-h/2,w,h);
+  ovCtx.setLineDash([]);
+  ovCtx.strokeStyle='#4f6ef7';ovCtx.lineWidth=1/z;
+  ovCtx.strokeRect(-w/2,-h/2,w,h);
+  const s=_phScreen()/z;
+  _localHandles(w,h).forEach(([lx,ly])=>{
+    ovCtx.fillStyle='#fff';ovCtx.strokeStyle='#4f6ef7';ovCtx.lineWidth=lw;
+    ovCtx.beginPath();ovCtx.rect(lx-s/2,ly-s/2,s,s);
+    ovCtx.fill();ovCtx.stroke();
+  });
+  // Döndürme kolu
+  const rLineEnd=-h/2-_phRotOff();
+  ovCtx.strokeStyle='rgba(79,110,247,.8)';ovCtx.lineWidth=1/z;ovCtx.setLineDash([3/z,3/z]);
+  ovCtx.beginPath();ovCtx.moveTo(0,-h/2);ovCtx.lineTo(0,rLineEnd);ovCtx.stroke();
+  ovCtx.setLineDash([]);
+  ovCtx.beginPath();ovCtx.arc(0,rLineEnd,s*0.75,0,Math.PI*2);
+  ovCtx.fillStyle='#4f6ef7';ovCtx.fill();
+  ovCtx.strokeStyle='#fff';ovCtx.lineWidth=lw;ovCtx.stroke();
+  ovCtx.restore();
+  // Açı etiketi
+  if(placing.rotation){
+    ovCtx.save();
+    const label=Math.round(placing.rotation)+'°';
+    ovCtx.font='bold '+Math.round(12/z)+'px monospace';
+    const tw=ovCtx.measureText(label).width, bh=18/z;
+    const ly=cy-h/2*Math.abs(Math.cos(rot))-w/2*Math.abs(Math.sin(rot))-_phRotOff()-bh-6/z;
+    ovCtx.fillStyle='rgba(0,0,0,.65)';
+    ovCtx.fillRect(cx-tw/2-5/z,ly,tw+10/z,bh);
+    ovCtx.fillStyle='#f59e0b';
+    ovCtx.fillText(label,cx-tw/2,ly+bh-5/z);
+    ovCtx.restore();
+  }
 }
 function getPlaceHandles(){
   if(!placing)return[];
-  const {x,y,w,h}=placing;
-  return[[x,y],[x+w,y],[x,y+h],[x+w,y+h],[x+w/2,y],[x+w/2,y+h],[x,y+h/2],[x+w,y+h/2]];
+  const {x,y,w,h}=placing, rot=(placing.rotation||0)*Math.PI/180, cx=x+w/2, cy=y+h/2;
+  return _localHandles(w,h).map(([lx,ly])=>{const[a,b]=_rotatePt(lx,ly,rot);return[cx+a,cy+b];});
 }
 function hitPlaceHandle(mx,my){
-  const handles=getPlaceHandles();
+  if(!placing)return null;
+  const{x,y,w,h}=placing;
+  const rot=(placing.rotation||0)*Math.PI/180;
+  const cx=x+w/2,cy=y+h/2, hr=_phHit();
+  const[ldx,ldy]=_rotatePt(mx-cx,my-cy,-rot);
+  if(Math.abs(ldx)<hr&&Math.abs(ldy-(-h/2-_phRotOff()))<hr)return'rotate';
+  const handles=_localHandles(w,h);
   const keys=['tl','tr','bl','br','tm','bm','ml','mr'];
   for(let i=0;i<handles.length;i++){
-    const [hx,hy]=handles[i];
-    if(Math.abs(hx-mx)<10&&Math.abs(hy-my)<10) return keys[i];
+    const[hx,hy]=handles[i];
+    if(Math.abs(ldx-hx)<hr&&Math.abs(ldy-hy)<hr)return keys[i];
   }
   return null;
 }
 function insidePlace(mx,my){
   if(!placing)return false;
-  return mx>=placing.x&&mx<=placing.x+placing.w&&my>=placing.y&&my<=placing.y+placing.h;
+  const{x,y,w,h}=placing;
+  const rot=(placing.rotation||0)*Math.PI/180;
+  const cx=x+w/2,cy=y+h/2;
+  const[ldx,ldy]=_rotatePt(mx-cx,my-cy,-rot);
+  return ldx>=-w/2&&ldx<=w/2&&ldy>=-h/2&&ldy<=h/2;
 }
+let _placeRotStartAngle=0, _placeRotStartRot=0;
 function placeDown(mx,my){
   const hit=hitPlaceHandle(mx,my);
-  if(hit){placeAction=hit;placeDragStart={x:mx,y:my};placeDragOrig={...placing};return true;}
+  if(hit){
+    placeAction=hit;placeDragStart={x:mx,y:my};placeDragOrig={...placing};
+    if(hit==='rotate'){
+      const cx=placing.x+placing.w/2,cy=placing.y+placing.h/2;
+      _placeRotStartAngle=Math.atan2(my-cy,mx-cx)*180/Math.PI;
+      _placeRotStartRot=placing.rotation||0;
+    }
+    return true;
+  }
   if(insidePlace(mx,my)){placeAction='move';placeDragStart={x:mx,y:my};placeDragOrig={...placing};return true;}
   return false;
 }
@@ -1446,20 +1647,67 @@ function placeMove(mx,my){
   if(!placeAction||!placeDragStart)return;
   const dx=mx-placeDragStart.x,dy=my-placeDragStart.y;
   const o=placeDragOrig;
-  switch(placeAction){
-    case'move':placing.x=o.x+dx;placing.y=o.y+dy;break;
-    case'br':placing.w=Math.max(10,o.w+dx);placing.h=placing.w/o.ar;break;
-    case'bl':placing.w=Math.max(10,o.w-dx);placing.h=placing.w/o.ar;placing.x=o.x+o.w-placing.w;placing.y=o.y+o.h-placing.h;break;
-    case'tr':placing.w=Math.max(10,o.w+dx);placing.h=placing.w/o.ar;placing.y=o.y+o.h-placing.h;break;
-    case'tl':placing.w=Math.max(10,o.w-dx);placing.h=placing.w/o.ar;placing.x=o.x+o.w-placing.w;placing.y=o.y+o.h-placing.h;break;
-    case'mr':placing.w=Math.max(10,o.w+dx);break;
-    case'ml':placing.w=Math.max(10,o.w-dx);placing.x=o.x+o.w-placing.w;break;
-    case'bm':placing.h=Math.max(10,o.h+dy);break;
-    case'tm':placing.h=Math.max(10,o.h-dy);placing.y=o.y+o.h-placing.h;break;
+  if(placeAction==='move'){
+    placing.x=o.x+dx;placing.y=o.y+dy;
+  } else if(placeAction==='rotate'){
+    const cx=o.x+o.w/2,cy=o.y+o.h/2;
+    const curAng=Math.atan2(my-cy,mx-cx)*180/Math.PI;
+    let nr=_placeRotStartRot+(curAng-_placeRotStartAngle);
+    nr=((nr+180)%360+360)%360-180;           // -180..180 aralığında tut
+    if(window._ksShift||window._ksTouch){      // 15°'ye ve 0/90/180'e yapış
+      const sn=Math.round(nr/15)*15; if(window._ksShift||Math.abs(sn-nr)<3) nr=sn;
+    }
+    placing.rotation=nr;
+    _syncPlaceRotCorner();
+  } else {
+    // Döndürülmüş halde yeniden boyutlandırma (karşı köşe sabit kalır)
+    const rot=(placing.rotation||0)*Math.PI/180;
+    const[ldx,ldy]=_rotatePt(dx,dy,-rot);
+    const ocx=o.x+o.w/2,ocy=o.y+o.h/2;
+    let nw=o.w,nh=o.h,pinLX=0,pinLY=0;
+    switch(placeAction){
+      case'br':nw=Math.max(10,o.w+ldx);nh=nw/o.ar;pinLX=-o.w/2;pinLY=-o.h/2;break;
+      case'bl':nw=Math.max(10,o.w-ldx);nh=nw/o.ar;pinLX=o.w/2;pinLY=-o.h/2;break;
+      case'tr':nw=Math.max(10,o.w+ldx);nh=nw/o.ar;pinLX=-o.w/2;pinLY=o.h/2;break;
+      case'tl':nw=Math.max(10,o.w-ldx);nh=nw/o.ar;pinLX=o.w/2;pinLY=o.h/2;break;
+      case'mr':nw=Math.max(10,o.w+ldx);pinLX=-o.w/2;break;
+      case'ml':nw=Math.max(10,o.w-ldx);pinLX=o.w/2;break;
+      case'bm':nh=Math.max(10,o.h+ldy);pinLY=-o.h/2;break;
+      case'tm':nh=Math.max(10,o.h-ldy);pinLY=o.h/2;break;
+    }
+    const[wpx,wpy]=_rotatePt(pinLX,pinLY,rot);
+    const worldPinX=ocx+wpx,worldPinY=ocy+wpy;
+    const npinLX=pinLX<0?-nw/2:(pinLX>0?nw/2:0);
+    const npinLY=pinLY<0?-nh/2:(pinLY>0?nh/2:0);
+    const[nwpx,nwpy]=_rotatePt(npinLX,npinLY,rot);
+    const ncx=worldPinX-nwpx,ncy=worldPinY-nwpy;
+    placing.w=nw;placing.h=nh;
+    placing.x=ncx-nw/2;placing.y=ncy-nh/2;
   }
   updatePlaceInfo();render();
 }
 function placeUp(){placeAction=null;placeDragStart=null;placeDragOrig=null;}
+function onPlaceCornerChange(v){
+  if(!placing)return;
+  placing.cornerRadius=parseInt(v)||0;
+  document.getElementById('placeCornerV').textContent=placing.cornerRadius+'%';
+  render();
+}
+function onPlaceRotateChange(v){
+  if(!placing)return;
+  placing.rotation=parseInt(v)||0;
+  document.getElementById('placeRotateV').textContent=placing.rotation+'°';
+  render();
+}
+function onPlaceRotateDelta(delta){
+  if(!placing)return;
+  if(typeof _pushPlace==='function') _pushPlace(_placeSnap());
+  let r=(placing.rotation||0)+delta;
+  r=((r+180)%360+360)%360-180;
+  placing.rotation=r;
+  _syncPlaceRotCorner();
+  render();
+}
 
 // ═══════════════════════════════════════════════════
 //  MOUSE EVENTS
@@ -5071,6 +5319,463 @@ function cancelCrop(){
   undo=function(){ if(!placing&&adjLiveBase) resetAllAdj(); cancelCrop(); _u(); };
   redo=function(){ if(adjLiveBase) resetAllAdj(); cancelCrop(); _r(); };
 })();
+
+
+// ═══════════════════════════════════════════════════
+//  KRERSN STUDIO — v3 EKLERİ
+//  Mobil/dokunmatik · PWA · Otomatik kayıt
+//  Shorts/Play şablonları · Güvenli alan kılavuzu · Logo
+// ═══════════════════════════════════════════════════
+window._ksTouch=!!(window.matchMedia&&matchMedia('(pointer:coarse)').matches);
+window._ksShift=false;
+document.addEventListener('keydown',e=>{ if(e.key==='Shift') window._ksShift=true; });
+document.addEventListener('keyup',e=>{ if(e.key==='Shift') window._ksShift=false; });
+window.addEventListener('blur',()=>{ window._ksShift=false; });
+function _ksMobile(){ return window.matchMedia&&matchMedia('(max-width:820px)').matches; }
+
+// ─── Yerleştirme geri-al geçmişine döndürme/köşe ekle ───
+(function(){
+  _pushPlace=function(s){ if(!s) return; const l=placeHist[placeHist.length-1];
+    if(l&&l.x===s.x&&l.y===s.y&&l.w===s.w&&l.h===s.h&&l.rotation===s.rotation&&l.cornerRadius===s.cornerRadius) return;
+    placeHist.push(s); if(placeHist.length>50) placeHist.shift(); _placeHistBtn(); };
+  _placeSnap=function(){ return placing?{x:placing.x,y:placing.y,w:placing.w,h:placing.h,rotation:placing.rotation||0,cornerRadius:placing.cornerRadius||0}:null; };
+  const _pu=placeUndo;
+  placeUndo=function(){ _pu(); _syncPlaceRotCorner(); };
+  let rT=null, cT=null;
+  const _rc=onPlaceRotateChange, _cc=onPlaceCornerChange;
+  onPlaceRotateChange=function(v){ if(placing&&!rT) _pushPlace(_placeSnap()); clearTimeout(rT); rT=setTimeout(()=>{rT=null;},400); _rc(v); };
+  onPlaceCornerChange=function(v){ if(placing&&!cT) _pushPlace(_placeSnap()); clearTimeout(cT); cT=setTimeout(()=>{cT=null;},400); _cc(v); };
+})();
+
+// ═══════════════════════════════════════════════════
+//  1) DOKUNMATİK: tek parmak = araç, iki parmak = zoom/kaydır
+// ═══════════════════════════════════════════════════
+(function(){
+  const ov=document.getElementById('c-overlay');
+  const pts=new Map();          // pointerId → {x,y}
+  let pending=null;             // {e, last, timer}
+  let activeId=null;            // araca iletilen parmak
+  let pinch=null;               // {d0,mx0,my0,z0,px0,py0}
+  let waitAllUp=false;
+  const DELAY=70;
+
+  function isCanvasTarget(t){ return t===ov||t===ws||t===wrap||(wrap&&wrap.contains(t)); }
+  function synth(type,src){
+    const ev=new PointerEvent(type,{bubbles:true,cancelable:true,composed:true,
+      pointerId:src.pointerId,pointerType:'touch',isPrimary:true,
+      clientX:src.clientX,clientY:src.clientY,screenX:src.screenX,screenY:src.screenY,
+      button:type==='pointermove'?-1:0,buttons:type==='pointerup'||type==='pointercancel'?0:1,
+      pressure:src.pressure||0.5,width:src.width||1,height:src.height||1});
+    ev._ks=1;
+    ov.dispatchEvent(ev);
+  }
+  function flush(){
+    if(!pending) return;
+    const p=pending; pending=null; clearTimeout(p.timer);
+    activeId=p.e.pointerId;
+    synth('pointerdown',p.e);
+    if(p.last) synth('pointermove',p.last);
+  }
+  function startPinch(){
+    const a=[...pts.values()]; if(a.length<2) return;
+    const r=ws.getBoundingClientRect();
+    const mx=(a[0].x+a[1].x)/2-r.left, my=(a[0].y+a[1].y)/2-r.top;
+    pinch={d0:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)||1,mx0:mx,my0:my,z0:zoom,px0:panX,py0:panY};
+  }
+  function movePinch(){
+    const a=[...pts.values()]; if(!pinch||a.length<2) return;
+    const r=ws.getBoundingClientRect();
+    const mx=(a[0].x+a[1].x)/2-r.left, my=(a[0].y+a[1].y)/2-r.top;
+    const d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)||1;
+    const nz=Math.max(.05,Math.min(20,pinch.z0*d/pinch.d0));
+    const cx=(pinch.mx0-pinch.px0)/pinch.z0, cy=(pinch.my0-pinch.py0)/pinch.z0;
+    zoom=nz; panX=mx-cx*nz; panY=my-cy*nz;
+    applyTransform();
+    if(placing) render();
+  }
+
+  ws.addEventListener('pointerdown',e=>{
+    if(e._ks||e.pointerType!=='touch') return;
+    window._ksTouch=true;
+    if(!isCanvasTarget(e.target)) return;
+    e.stopPropagation(); e.preventDefault();
+    try{ ws.setPointerCapture(e.pointerId); }catch(_){}
+    pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(waitAllUp) return;
+    if(pts.size===1){
+      pending={e,last:null,timer:setTimeout(flush,DELAY)};
+    } else if(pts.size===2){
+      if(pending){ clearTimeout(pending.timer); pending=null; }
+      else if(activeId!==null){ const q=pts.get(activeId)||{x:e.clientX,y:e.clientY}; synth('pointerup',{pointerId:activeId,clientX:q.x,clientY:q.y,screenX:q.x,screenY:q.y}); activeId=null; }
+      if(typeof hideBrushCursor==='function') hideBrushCursor();
+      startPinch();
+    }
+  },true);
+
+  ws.addEventListener('pointermove',e=>{
+    if(e._ks||e.pointerType!=='touch'||!pts.has(e.pointerId)) return;
+    e.stopPropagation(); e.preventDefault();
+    pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pinch){ movePinch(); return; }
+    if(pending&&pending.e.pointerId===e.pointerId){ pending.last=e; return; }
+    if(activeId===e.pointerId) synth('pointermove',e);
+  },true);
+
+  function end(e){
+    if(e._ks||e.pointerType!=='touch'||!pts.has(e.pointerId)) return;
+    e.stopPropagation();
+    pts.delete(e.pointerId);
+    if(pending&&pending.e.pointerId===e.pointerId){ flush(); }
+    if(activeId===e.pointerId){ synth('pointerup',e); activeId=null; if(typeof hideBrushCursor==='function') hideBrushCursor(); }
+    if(pinch){ pinch=null; if(pts.size>0) waitAllUp=true; }
+    if(pts.size===0) waitAllUp=false;
+  }
+  ws.addEventListener('pointerup',end,true);
+  ws.addEventListener('pointercancel',end,true);
+
+  // Ekran dönünce tuvali sığdır
+  window.addEventListener('orientationchange',()=>setTimeout(()=>{ if(W) fitScreen(); },350));
+  // iOS'ta sayfa yakınlaştırmasını engelle (tuval kendi zoom'unu kullanır)
+  document.addEventListener('gesturestart',e=>e.preventDefault());
+})();
+
+// ─── Dokunmatik klon kaynağı: "Kaynak seç" butonu ───
+let _ksPickSrc=false;
+function ksPickCloneSrc(){
+  _ksPickSrc=!_ksPickSrc;
+  document.querySelectorAll('.ksSrcPick').forEach(b=>b.classList.toggle('on',_ksPickSrc));
+  if(_ksPickSrc){ toast('🎯 Kaynak olacak noktaya dokun'); ksClosePanel(); }
+}
+ws.addEventListener('pointerdown',e=>{
+  if(!_ksPickSrc||!W||(tool!=='clone'&&tool!=='heal')) return;
+  if(e.pointerType==='touch'&&!e._ks) return;   // dokunmada sentetik olayı bekle
+  e.stopPropagation(); e.preventDefault();
+  const p=getPos(e);
+  cloneSrc={x:p.x,y:p.y}; cloneOff=null; _updCloneLbl(); _drawSrcMarker(p.x,p.y);
+  _ksPickSrc=false; document.querySelectorAll('.ksSrcPick').forEach(b=>b.classList.remove('on'));
+  toast('🎯 Kaynak seçildi — şimdi boyamaya başla');
+},true);
+
+// ═══════════════════════════════════════════════════
+//  2) MOBİL PANEL (çekmece)
+// ═══════════════════════════════════════════════════
+function ksOpenPanel(){ document.body.classList.add('ks-panel-open'); }
+function ksClosePanel(){ document.body.classList.remove('ks-panel-open'); }
+function ksTogglePanel(){ document.body.classList.toggle('ks-panel-open'); }
+
+// ═══════════════════════════════════════════════════
+//  3) GÜVENLİ ALAN KILAVUZU (Shorts / Play / ikon)
+// ═══════════════════════════════════════════════════
+let ksGuideOn=false, _ksGuideKey='';
+function ksToggleGuide(force){
+  ksGuideOn=typeof force==='boolean'?force:!ksGuideOn;
+  document.getElementById('btnGuide')?.classList.toggle('ok',ksGuideOn);
+  _ksGuideKey=''; ksRenderGuide();
+  if(ksGuideOn&&W) toast('▦ Kılavuz: '+_ksGuideType().label+' (dışa aktarmaya dahil değil)');
+}
+function _ksGuideType(){
+  const r=W/H;
+  if(Math.abs(r-9/16)<0.012) return {t:'shorts',label:'Shorts/Reels/TikTok güvenli alan (yaklaşık)'};
+  if(Math.abs(r-1024/500)<0.02) return {t:'feature',label:'Play öne çıkan görsel — önemli içerik ortada'};
+  if(W===H&&W<=1024) return {t:'icon',label:'Uygulama ikonu maskesi (yaklaşık)'};
+  if(Math.abs(r-16/9)<0.012) return {t:'yt',label:'16:9 — üçte bir + kenar boşluğu'};
+  return {t:'thirds',label:'Üçte bir kuralı'};
+}
+function ksRenderGuide(){
+  let g=document.getElementById('ksGuide');
+  const key=(ksGuideOn?1:0)+':'+W+'x'+H;
+  if(key===_ksGuideKey) return; _ksGuideKey=key;
+  if(!ksGuideOn||!W){ if(g) g.remove(); return; }
+  if(!g){ g=document.createElementNS('http://www.w3.org/2000/svg','svg'); g.id='ksGuide'; wrap.appendChild(g); }
+  g.setAttribute('width',W); g.setAttribute('height',H); g.setAttribute('viewBox','0 0 '+W+' '+H);
+  const ns='vector-effect="non-scaling-stroke"';
+  const L=(x1,y1,x2,y2,c,d)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c||'#22d3ee'}" stroke-width="1.5" ${d?'stroke-dasharray="6 5"':''} ${ns}/>`;
+  const R=(x,y,w,h,rx,c,d)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx||0}" fill="none" stroke="${c||'#22d3ee'}" stroke-width="2" ${d?'stroke-dasharray="8 6"':''} ${ns}/>`;
+  const S=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="rgba(239,68,68,.16)"/>`;
+  const T=(x,y,s,txt)=>`<text x="${x}" y="${y}" font-size="${s}" fill="#fbbf24" font-family="Segoe UI,system-ui,sans-serif" font-weight="700" style="paint-order:stroke" stroke="#000" stroke-width="${s/6}">${txt}</text>`;
+  const fs=Math.max(12,Math.round(Math.min(W,H)*0.028));
+  const gt=_ksGuideType(); let s='';
+  if(gt.t==='shorts'){
+    const top=H*0.14, bot=H*0.74, right=W*0.84, left=W*0.06;
+    s+=S(0,0,W,top)+S(0,bot,W,H-bot)+S(right,top,W-right,bot-top)+S(0,top,left,bot-top);
+    s+=R(left,top,right-left,bot-top,0,'#22d3ee',true);
+    s+=T(left+fs*0.4,top+fs*1.3,fs,'Güvenli alan')+T(fs*0.6,H-fs*0.8,fs*0.8,'Altyazı / kanal adı bölgesi')+T(right+fs*0.2,top+fs*1.3,fs*0.7,'Butonlar');
+  } else if(gt.t==='feature'){
+    const mx=W*0.12, my=H*0.14;
+    s+=R(mx,my,W-2*mx,H-2*my,0,'#22d3ee',true)+L(W/2,0,W/2,H,'rgba(34,211,238,.5)',true)+L(0,H/2,W,H/2,'rgba(34,211,238,.5)',true);
+    s+=T(mx+fs*0.3,my+fs*1.2,fs,'Önemli içerik burada');
+  } else if(gt.t==='icon'){
+    s+=R(0,0,W,H,W*0.2,'#22d3ee',true)+`<circle cx="${W/2}" cy="${H/2}" r="${W*0.4}" fill="none" stroke="rgba(250,204,21,.8)" stroke-width="1.5" stroke-dasharray="6 5" ${ns}/>`;
+    s+=T(fs*0.5,H-fs*0.6,fs*0.8,'Köşeler yuvarlatılır · logo daire içinde');
+  } else {
+    for(let i=1;i<3;i++){ s+=L(W*i/3,0,W*i/3,H,'rgba(34,211,238,.6)',true)+L(0,H*i/3,W,H*i/3,'rgba(34,211,238,.6)',true); }
+    if(gt.t==='yt'){ const m=Math.min(W,H)*0.05; s+=R(m,m,W-2*m,H-2*m,0,'rgba(250,204,21,.8)',true); }
+  }
+  g.innerHTML=s;
+}
+(function(){
+  const _at=applyTransform;
+  applyTransform=function(){ _at.apply(this,arguments); ksRenderGuide(); };
+})();
+
+// ═══════════════════════════════════════════════════
+//  4) IndexedDB yardımcıları (otomatik kayıt + logo)
+// ═══════════════════════════════════════════════════
+const KSDB={
+  db:null,
+  open(){
+    if(this.db) return Promise.resolve(this.db);
+    return new Promise((res,rej)=>{
+      if(!window.indexedDB){ rej(new Error('IndexedDB yok')); return; }
+      const r=indexedDB.open('krersn-studio',1);
+      r.onupgradeneeded=()=>{ const d=r.result;
+        if(!d.objectStoreNames.contains('tabs')) d.createObjectStore('tabs',{keyPath:'key'});
+        if(!d.objectStoreNames.contains('kv')) d.createObjectStore('kv'); };
+      r.onsuccess=()=>{ this.db=r.result; res(this.db); };
+      r.onerror=()=>rej(r.error);
+    });
+  },
+  _tx(store,mode,fn){ return this.open().then(d=>new Promise((res,rej)=>{
+    const t=d.transaction(store,mode), s=t.objectStore(store); let out;
+    const rq=fn(s); if(rq) rq.onsuccess=()=>{ out=rq.result; };
+    t.oncomplete=()=>res(out); t.onerror=()=>rej(t.error); t.onabort=()=>rej(t.error);
+  })); },
+  put(store,val,key){ return this._tx(store,'readwrite',s=>key!==undefined?s.put(val,key):s.put(val)); },
+  get(store,key){ return this._tx(store,'readonly',s=>s.get(key)); },
+  del(store,key){ return this._tx(store,'readwrite',s=>s.delete(key)); },
+  all(store){ return this._tx(store,'readonly',s=>s.getAll()); },
+};
+
+// ═══════════════════════════════════════════════════
+//  5) OTOMATİK KAYIT
+// ═══════════════════════════════════════════════════
+const KS_SESSION=Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const _ksDirty=new Set(); let _ksSaveT=null, _ksSaving=false, _ksAgain=false, _ksAutoOK=true;
+function _ksKey(id){ return KS_SESSION+'_'+id; }
+function _ksTabData(id){
+  const c=canvases.find(c=>c.id===id); if(!c) return null;
+  if(id===activeCid) return {name:c.name,fileName:c.fileName,W,H,activeIdx,layers};
+  return {name:c.name,fileName:c.fileName,W:c.W,H:c.H,activeIdx:c.activeIdx,layers:c.layers||[]};
+}
+function _ksBlob(cnv){ return new Promise(res=>{ try{ cnv.toBlob(b=>res(b),'image/png'); }catch(e){ res(null); } }); }
+function ksAutosaveSchedule(id){
+  if(!_ksAutoOK) return;
+  _ksDirty.add(id===undefined?activeCid:id);
+  clearTimeout(_ksSaveT);
+  _ksSaveT=setTimeout(()=>{ (window.requestIdleCallback||setTimeout)(()=>ksAutosaveFlush(),{timeout:2000}); },2500);
+}
+async function ksAutosaveFlush(){
+  if(_ksSaving){ _ksAgain=true; return; }
+  _ksSaving=true;
+  try{
+    for(const id of [..._ksDirty]){
+      _ksDirty.delete(id);
+      const d=_ksTabData(id);
+      if(!d||!d.W||!d.layers.length){ await KSDB.del('tabs',_ksKey(id)); continue; }
+      const ls=[];
+      for(const l of d.layers){
+        ls.push({name:l.name,op:l.op,blend:l.blend,vis:l.vis,locked:!!l.locked,
+          shadow:l.shadow?{...l.shadow}:null,blob:await _ksBlob(l.cnv)});
+      }
+      await KSDB.put('tabs',{key:_ksKey(id),sess:KS_SESSION,id,name:d.name,fileName:d.fileName||'',
+        W:d.W,H:d.H,activeIdx:d.activeIdx,savedAt:Date.now(),layers:ls});
+    }
+    const st=document.getElementById('ksSaveSt');
+    if(st){ const t=new Date(); st.textContent='💾 '+String(t.getHours()).padStart(2,'0')+':'+String(t.getMinutes()).padStart(2,'0'); st.title='Tarayıcıya otomatik kaydedildi'; }
+  }catch(err){
+    console.warn('Otomatik kayıt hatası',err);
+    if(String(err&&err.name).includes('Quota')){ toast('⚠️ Tarayıcı depolaması dolu — otomatik kayıt durdu, projeyi .krersn olarak kaydet'); _ksAutoOK=false; }
+  }finally{
+    _ksSaving=false;
+    if(_ksAgain){ _ksAgain=false; ksAutosaveSchedule(activeCid); }
+  }
+}
+async function _ksSyncClosedTabs(){
+  try{
+    const all=await KSDB.all('tabs'); const ids=new Set(canvases.filter(c=>c.id===activeCid?W>0:c.W>0).map(c=>_ksKey(c.id)));
+    for(const r of all){ if(r.sess===KS_SESSION&&!ids.has(r.key)) await KSDB.del('tabs',r.key); }
+  }catch(e){}
+}
+(function(){
+  const _sh=saveHistory; saveHistory=function(){ const r=_sh.apply(this,arguments); ksAutosaveSchedule(); return r; };
+  const _u=undo; undo=function(){ const r=_u.apply(this,arguments); ksAutosaveSchedule(); return r; };
+  const _r=redo; redo=function(){ const r=_r.apply(this,arguments); ksAutosaveSchedule(); return r; };
+  const _ct=closeTab; closeTab=function(){ const r=_ct.apply(this,arguments); _ksSyncClosedTabs(); return r; };
+  const _rt=renderTabs; renderTabs=function(){ const r=_rt.apply(this,arguments); if(W) ksAutosaveSchedule(); return r; };
+  document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden'&&_ksDirty.size){ clearTimeout(_ksSaveT); ksAutosaveFlush(); } });
+})();
+
+function _ksLoadDoc(d,imgs,name){
+  resetTransientState();
+  if(W>0){
+    saveCurrentState();
+    const nc={id:++canvasIdCtr,name:name||'Tuval',layers:[],W:0,H:0,activeIdx:0,sel:null,history:[],histIdx:-1,zoom:1,panX:0,panY:0};
+    canvases.push(nc); activeCid=nc.id;
+  }
+  placing=null; sel=null;
+  document.getElementById('placebar').style.display='none';
+  initCanvas(d.W,d.H);
+  layers=d.layers.map((ld,i)=>{
+    const l=mkLayer(ld.name||('Katman '+(i+1)));
+    if(imgs[i]) l.ctx.drawImage(imgs[i],0,0);
+    l.op=typeof ld.op==='number'?ld.op:1; l.blend=ld.blend||'source-over';
+    l.vis=ld.vis!==false; l.locked=!!ld.locked; l.shadow=ld.shadow||null;
+    return l;
+  });
+  activeIdx=Math.min(Math.max(0,d.activeIdx||0),layers.length-1);
+  history=[]; histIdx=-1;
+  document.getElementById('dropHint').style.display='none';
+  wrap.style.display='inline-block';
+  document.getElementById('toolopts').style.display='flex';
+  saveHistory(); fitScreen(); render(); renderLayers();
+  const c=_activeTab();
+  if(c){ c.W=W; c.H=H; c.layers=layers; c.name=name||c.name; if(d.fileName) c.fileName=d.fileName; }
+  renderTabs();
+}
+async function ksRestoreOld(recs){
+  const box=document.getElementById('ksRestore'); if(box) box.remove();
+  recs.sort((a,b)=>a.savedAt-b.savedAt);
+  let n=0;
+  for(const r of recs){
+    try{
+      const imgs=await Promise.all(r.layers.map(l=>l.blob?createImageBitmap(l.blob).catch(()=>null):null));
+      _ksLoadDoc(r,imgs,r.name);
+      n++;
+    }catch(e){ console.warn(e); }
+  }
+  for(const r of recs){ try{ await KSDB.del('tabs',r.key); }catch(e){} }
+  canvases.forEach(c=>_ksDirty.add(c.id)); ksAutosaveFlush();
+  toast('♻️ '+n+' tuval geri yüklendi');
+}
+async function ksDiscardOld(recs){
+  const box=document.getElementById('ksRestore'); if(box) box.remove();
+  for(const r of recs){ try{ await KSDB.del('tabs',r.key); }catch(e){} }
+  toast('🗑 Eski otomatik kayıt silindi');
+}
+async function ksCheckRestore(){
+  let all=[];
+  try{ all=await KSDB.all('tabs'); }catch(e){ _ksAutoOK=false; return; }
+  const old=all.filter(r=>r.sess!==KS_SESSION);
+  const stale=old.filter(r=>Date.now()-r.savedAt>30*864e5);
+  for(const r of stale){ try{ await KSDB.del('tabs',r.key); }catch(e){} }
+  const recs=old.filter(r=>Date.now()-r.savedAt<=30*864e5&&r.W>0);
+  if(!recs.length) return;
+  const last=new Date(Math.max(...recs.map(r=>r.savedAt)));
+  const when=last.toLocaleDateString('tr-TR')+' '+last.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
+  const box=document.createElement('div'); box.id='ksRestore';
+  box.innerHTML='<span>💾 Kaydedilmemiş çalışman bulundu: <b>'+recs.length+' tuval</b> · '+when+'</span>';
+  const b1=document.createElement('button'); b1.className='ok'; b1.textContent='♻️ Geri Yükle'; b1.onclick=()=>ksRestoreOld(recs);
+  const b2=document.createElement('button'); b2.textContent='🗑 Sil'; b2.onclick=()=>{ if(confirm('Eski otomatik kayıt kalıcı olarak silinsin mi?')) ksDiscardOld(recs); };
+  const b3=document.createElement('button'); b3.textContent='Sonra'; b3.onclick=()=>box.remove();
+  box.append(b1,b2,b3); document.body.appendChild(box);
+}
+
+// ═══════════════════════════════════════════════════
+//  6) LOGO / FİLİGRAN
+// ═══════════════════════════════════════════════════
+let _ksLogoImg=null;
+function _ksLoadLogoImg(){
+  if(_ksLogoImg) return Promise.resolve(_ksLogoImg);
+  return KSDB.get('kv','logo').then(b=>{
+    if(!b) return null;
+    return new Promise(res=>{ const im=new Image(); im.onload=()=>{ _ksLogoImg=im; res(im); }; im.onerror=()=>res(null); im.src=URL.createObjectURL(b); });
+  }).catch(()=>null);
+}
+function ksLogoMenu(ev){
+  ev&&ev.stopPropagation();
+  const m=document.getElementById('ksLogoMenu');
+  if(m.classList.contains('open')){ m.classList.remove('open'); return; }
+  _ksLoadLogoImg().then(img=>{
+    const pv=m.querySelector('.ksl-prev');
+    pv.innerHTML=img?'':'<span style="font-size:11px;color:var(--tx3)">Henüz logo seçilmedi</span>';
+    if(img){ const i=new Image(); i.src=img.src; pv.appendChild(i); }
+    m.querySelectorAll('.ksl-need').forEach(b=>b.disabled=!img);
+    const r=(ev&&ev.currentTarget||document.getElementById('btnLogo')).getBoundingClientRect();
+    m.style.top=(r.bottom+6)+'px';
+    m.style.left=Math.max(8,Math.min(innerWidth-230,r.left))+'px';
+    m.classList.add('open');
+  });
+}
+document.addEventListener('pointerdown',e=>{ const m=document.getElementById('ksLogoMenu'); if(m&&m.classList.contains('open')&&!m.contains(e.target)&&e.target.id!=='btnLogo') m.classList.remove('open'); });
+function ksPickLogo(){ document.getElementById('ksLogoMenu').classList.remove('open'); document.getElementById('ksLogoInput').click(); }
+function ksLogoFile(inp){
+  const f=inp.files&&inp.files[0]; inp.value=''; if(!f) return;
+  if(!/^image\//.test(f.type)){ toast('❌ Resim dosyası seç (PNG önerilir)'); return; }
+  KSDB.put('kv',f,'logo').then(()=>{ _ksLogoImg=null; return _ksLoadLogoImg(); })
+    .then(img=>{ toast('⭐ Logo kaydedildi'); if(img&&W) ksPlaceLogo('br'); })
+    .catch(()=>toast('❌ Logo kaydedilemedi'));
+}
+function ksPlaceLogo(pos){
+  document.getElementById('ksLogoMenu').classList.remove('open');
+  if(!W){ toast('Önce tuval oluştur veya resim aç'); return; }
+  if(placing){ toast('Önce mevcut yerleştirmeyi onayla veya iptal et'); return; }
+  _ksLoadLogoImg().then(img=>{
+    if(!img){ ksPickLogo(); return; }
+    placeImage(img);
+    const m=Math.round(Math.min(W,H)*0.04);
+    const tw=Math.min(W,H)*(pos==='c'?0.45:0.2);
+    placing.w=tw; placing.h=tw/placing.ar;
+    if(pos==='c'){ placing.x=(W-placing.w)/2; placing.y=(H-placing.h)/2; }
+    else { placing.x=pos==='tl'||pos==='bl'?m:W-placing.w-m; placing.y=pos==='tl'||pos==='tr'?m:H-placing.h-m; }
+    placing.layerName='Logo';
+    if(typeof _syncPlaceSlider==='function') _syncPlaceSlider();
+    updatePlaceInfo(); render();
+    toast('⭐ Logo yerleştirildi — ayarlayıp Onayla. Saydamlık: Katman panelinden');
+  });
+}
+async function ksRemoveLogo(){
+  document.getElementById('ksLogoMenu').classList.remove('open');
+  if(!confirm('Kayıtlı logo silinsin mi?')) return;
+  try{ await KSDB.del('kv','logo'); _ksLogoImg=null; toast('Logo silindi'); }catch(e){}
+}
+
+// ═══════════════════════════════════════════════════
+//  7) ŞABLONLAR (Yeni Tuval)
+// ═══════════════════════════════════════════════════
+function ksTpl(w,h,guide){
+  setNC(w,h);
+  window._ksTplGuide=!!guide;
+}
+(function(){
+  const _cc=createCanvas;
+  createCanvas=function(){
+    const g=window._ksTplGuide; window._ksTplGuide=false;
+    const r=_cc.apply(this,arguments);
+    if(W&&g) ksToggleGuide(true);
+    return r;
+  };
+})();
+
+// ═══════════════════════════════════════════════════
+//  8) PWA — çevrimdışı çalışma + ana ekrana ekle
+// ═══════════════════════════════════════════════════
+let _ksInstallEvt=null;
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault(); _ksInstallEvt=e;
+  const b=document.getElementById('btnInstall'); if(b) b.style.display='inline-block';
+});
+window.addEventListener('appinstalled',()=>{ const b=document.getElementById('btnInstall'); if(b) b.style.display='none'; toast('📲 Uygulama yüklendi'); });
+function ksInstall(){
+  if(_ksInstallEvt){ _ksInstallEvt.prompt(); _ksInstallEvt.userChoice.finally(()=>{ _ksInstallEvt=null; document.getElementById('btnInstall').style.display='none'; }); }
+}
+if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('sw.js').then(reg=>{
+      reg.addEventListener('updatefound',()=>{
+        const nw=reg.installing; if(!nw) return;
+        nw.addEventListener('statechange',()=>{
+          if(nw.state==='installed'&&navigator.serviceWorker.controller) toast('🔄 Yeni sürüm hazır — sayfayı yenileyince açılır');
+        });
+      });
+    }).catch(e=>console.warn('SW kaydı başarısız',e));
+  });
+}
+
+// ─── Başlangıç ───
+document.addEventListener('DOMContentLoaded',()=>{
+  if(navigator.storage&&navigator.storage.persist) navigator.storage.persist().catch(()=>{});
+  setTimeout(ksCheckRestore,400);
+});
 
 </script>
 
