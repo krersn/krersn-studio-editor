@@ -6645,7 +6645,7 @@ async function _ksPdfLoadText(p) {
     if (/italic|oblique/.test(nm)) italic = true;
     if (/courier|mono|consol|menlo/.test(nm)) mono = true;
     else if (/times|serif|georgia|garamond|cambria|book|minion|roman/.test(nm) && !/sans/.test(nm)) serif = true;
-    p.items.push({ str: it.str, x: tx[4], base: tx[5], size: fh, w: Math.max(w, fh * 0.3), fname: fname.replace(/^[A-Z]{6}\+/, '') || st.fontFamily || '?',
+    p.items.push({ str: it.str, x: tx[4], base: tx[5], size: fh, w: Math.max(w, fh * 0.3), fname: fname.replace(/^[A-Z]{6}\+/, '').replace(/-\d+$/, '').replace(/,(Bold|Italic|BoldItalic)$/i, '-$1') || st.fontFamily || '?',
       fam: mono ? 'mono' : (serif ? 'serif' : 'sans'), b: bold, i: italic, used: false });
   }
 }

@@ -1,6 +1,6 @@
 // Krersn Studio Editör — service worker
 // Sayfa: önce ağ (güncel sürüm gelsin), ağ yoksa önbellek (çevrimdışı çalışsın).
-const VERSION = 'ks-v5.1.0';
+const VERSION = 'ks-v5.1.1';
 const CORE = [
   './',
   'index.html',
