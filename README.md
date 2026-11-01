@@ -25,6 +25,7 @@
 - **Hazır şablonlar:** Shorts/Reels/TikTok 1080×1920, YouTube kapak, Play öne çıkan 1024×500, Play ikon 512×512, Play ekran görüntüleri
 - **▦ Güvenli alan kılavuzu:** Shorts arayüz bölgeleri, Play öne çıkan görsel ve ikon maskesi (dışa aktarmaya dahil olmaz)
 - **⭐ Logo / filigran:** logonu bir kez seç, tek dokunuşla köşeye veya ortaya yerleştir
+- **📄 PDF düzenleyici:** PDF aç, var olan metne tıkla ve düzenle — yazı tipi, boyutu ve rengi tıkladığın metinden otomatik seçilir. Metin ekle, beyaz kapat, vurgula, çiz/imza, görsel ekle, sayfa sil; Türkçe karakter destekli olarak yine PDF kaydet. Hassas bilgiler için 🔒 Düzleştir ile eski metni tamamen yok et.
 - **✨ Efektler (sosyal medya stüdyosu):** tek dokunuşla önizlemeli
   - **16 filtre:** Sahil, Gün Batımı, Canlı, Sinema, Film, Retro, Anı, Pastel, Bahar, Altın, Mat, Gece, Buz, Moody, Noir, Gümüş — şiddet ayarlı
   - **Trend efektler:** portre bulanıklığı, glitch, VHS, duotone, neon parlama, rüya ışığı, mozaik, vinyet, ışık sızıntısı, netlik HD, renk vurgusu, ayna
@@ -64,6 +65,7 @@
 - Telefonda klavye kısayolları yok; aynı işler butonlarla yapılır (klon kaynağı için **🎯 Kaynak Seç**).
 - Otomatik kayıt tarayıcının kendi depolamasındadır; tarayıcı verilerini silersen gider. Önemli işleri `.krersn` proje dosyası olarak da kaydet.
 - Yazı stilleri Google Fonts yazı tiplerini kullanır; internet yoksa sistem yazı tipine düşer.
+- PDF'de metin düzenleme, eski metni arka plan rengiyle kapatıp yenisini aynı yere yazar; eski metin dosyanın içinde kalır. Gizli bilgi silmek için **🔒 Düzleştir** kullan. Şifreli PDF'ler açılmaz.
 - Güvenli alan kılavuzları yaklaşıktır; platformların arayüzü zamanla değişebilir.
 
 ## Katkı
@@ -82,4 +84,4 @@ Hata bildirimi ve önerileri **Issues** sekmesinden açabilirsin. Değişiklik y
 
 ## English
 
-**Krersn Studio Editor** is a free, open-source photo editor in a single HTML file: no install, runs entirely in your browser. It has layers, smart eraser, curves, unsharp mask, clone stamp, spot healing, image rotation, `.krersn` project files and PNG/JPG/WebP export. Works on phones (touch drawing, pinch zoom), installs as a PWA, autosaves to the browser and ships Shorts / Google Play templates with safe-area guides, plus a one-tap social media studio: 16 filters, trend effects (glitch, VHS, duotone, portrait blur…), caption text styles and stickers. Try it: https://krersnstudio.com/krersn-studio-editor/ Licensed under MIT.
+**Krersn Studio Editor** is a free, open-source photo editor in a single HTML file: no install, runs entirely in your browser. It has layers, smart eraser, curves, unsharp mask, clone stamp, spot healing, image rotation, `.krersn` project files and PNG/JPG/WebP export. Works on phones (touch drawing, pinch zoom), installs as a PWA, autosaves to the browser and ships Shorts / Google Play templates with safe-area guides, a PDF editor (click any text to edit it with auto-detected font, size and colour; add text, highlight, draw, sign, delete pages, save as PDF) and a one-tap social media studio: 16 filters, trend effects (glitch, VHS, duotone, portrait blur…), caption text styles and stickers. Try it: https://krersnstudio.com/krersn-studio-editor/ Licensed under MIT.

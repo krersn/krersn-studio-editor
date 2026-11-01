@@ -324,6 +324,66 @@ body.ks-fx-open #toast{bottom:auto;top:92px;}
   .ksfx-tile{width:70px;} .ksfx-tile canvas{width:66px;height:66px;}
   .ksfx-btn{padding:10px 14px;}
 }
+
+/* ═══ v5: PDF düzenleyici ═══ */
+@font-face{font-family:KSPdfSans;src:url(fonts/NotoSans-Regular.ttf);font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:KSPdfSans;src:url(fonts/NotoSans-Bold.ttf);font-weight:700;font-style:normal;font-display:swap;}
+@font-face{font-family:KSPdfSans;src:url(fonts/NotoSans-Italic.ttf);font-weight:400;font-style:italic;font-display:swap;}
+@font-face{font-family:KSPdfSans;src:url(fonts/NotoSans-BoldItalic.ttf);font-weight:700;font-style:italic;font-display:swap;}
+@font-face{font-family:KSPdfSerif;src:url(fonts/NotoSerif-Regular.ttf);font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:KSPdfSerif;src:url(fonts/NotoSerif-Bold.ttf);font-weight:700;font-style:normal;font-display:swap;}
+@font-face{font-family:KSPdfSerif;src:url(fonts/NotoSerif-Italic.ttf);font-weight:400;font-style:italic;font-display:swap;}
+@font-face{font-family:KSPdfSerif;src:url(fonts/NotoSerif-BoldItalic.ttf);font-weight:700;font-style:italic;font-display:swap;}
+@font-face{font-family:KSPdfMono;src:url(fonts/NotoSansMono-Regular.ttf);font-weight:400;font-display:swap;}
+@font-face{font-family:KSPdfMono;src:url(fonts/NotoSansMono-Bold.ttf);font-weight:700;font-display:swap;}
+#btnPdf{border-color:#e8573c;color:#ffb39f;}
+#ksPdf{display:none;position:fixed;inset:0;z-index:800;background:#16161b;flex-direction:column;color:var(--tx);}
+#ksPdf.open{display:flex;}
+.kspdf-top{display:flex;align-items:center;gap:6px;padding:6px 10px;background:var(--s1);border-bottom:1px solid var(--bd);overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
+.kspdf-top::-webkit-scrollbar{display:none;}
+.kspdf-top .sep{width:1px;height:24px;background:var(--bd);flex:0 0 auto;margin:0 2px;}
+.kspdf-btn{flex:0 0 auto;padding:7px 11px;border-radius:8px;border:1px solid var(--bd);background:var(--s2);color:var(--tx);font-size:12.5px;cursor:pointer;white-space:nowrap;}
+.kspdf-btn:hover{background:var(--s3);}
+.kspdf-btn.on{background:var(--ac);border-color:var(--ac);color:#fff;}
+.kspdf-btn.save{background:var(--ok);border-color:var(--ok);color:#06210f;font-weight:700;}
+.kspdf-btn:disabled{opacity:.35;cursor:not-allowed;}
+#ksPdfTitle{font-size:12px;color:var(--tx2);white-space:nowrap;max-width:240px;overflow:hidden;text-overflow:ellipsis;flex:0 1 auto;}
+.kspdf-props{display:flex;align-items:center;gap:6px;padding:6px 10px;background:var(--s2);border-bottom:1px solid var(--bd);flex-wrap:wrap;flex-shrink:0;font-size:12px;}
+.kspdf-props select,.kspdf-props input[type=number]{background:var(--s3);border:1px solid var(--bd);color:var(--tx);border-radius:6px;padding:6px 6px;font-size:13px;}
+.kspdf-props input[type=number]{width:64px;}
+.kspdf-props input[type=color]{width:34px;height:30px;border:1px solid var(--bd);border-radius:6px;background:none;padding:1px;}
+#ksPdfDetect{color:#fbbf24;font-family:monospace;font-size:11.5px;}
+#ksPdfPages{flex:1;overflow:auto;padding:40px 16px 16px;display:flex;flex-direction:column;align-items:center;gap:44px;background:#202027;}
+.kspdf-page{position:relative;flex:0 0 auto;background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.45);touch-action:pan-x pan-y;user-select:none;}
+.kspdf-page canvas{position:absolute;left:0;top:0;}
+.kspdf-page.deleted{opacity:.25;filter:grayscale(1);}
+.kspdf-page.deleted::after{content:'SİLİNECEK';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:900 48px sans-serif;color:#e8573c;}
+.kspdf-ov,.kspdf-ink{position:absolute;inset:0;width:100%;height:100%;}
+.kspdf-ink{pointer-events:none;}
+.kspdf-ink path.sel{filter:drop-shadow(0 0 2px #4f6ef7);}
+#ksPdf[data-tool=edit] .kspdf-ov{cursor:text;}
+#ksPdf[data-tool=text] .kspdf-ov{cursor:copy;}
+#ksPdf[data-tool=white] .kspdf-page,#ksPdf[data-tool=hl] .kspdf-page,#ksPdf[data-tool=ink] .kspdf-page{touch-action:none;cursor:crosshair;}
+.kspdf-cover{position:absolute;}
+.kspdf-text{position:absolute;white-space:pre;line-height:1.2;outline:none;min-width:4px;}
+.kspdf-text.sel{outline:1.5px dashed #4f6ef7;outline-offset:2px;background:rgba(79,110,247,.06);cursor:text;user-select:text;}
+.kspdf-rect,.kspdf-img{position:absolute;}
+.kspdf-rect.hl{mix-blend-mode:multiply;}
+.kspdf-img img{width:100%;height:100%;display:block;pointer-events:none;}
+.kspdf-rect.sel,.kspdf-img.sel{outline:1.5px dashed #4f6ef7;outline-offset:1px;}
+.kspdf-h{position:absolute;right:-9px;bottom:-9px;width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid #4f6ef7;cursor:nwse-resize;touch-action:none;}
+.kspdf-pbar{position:absolute;right:-6px;top:-30px;display:flex;align-items:center;gap:4px;font-size:11px;color:var(--tx2);}
+.kspdf-pbar button{border:1px solid var(--bd);background:var(--s2);color:var(--tx);border-radius:6px;padding:2px 7px;cursor:pointer;font-size:12px;}
+.kspdf-foot{display:flex;align-items:center;gap:10px;padding:5px 12px;background:var(--s1);border-top:1px solid var(--bd);font-size:11px;color:var(--tx2);flex-shrink:0;}
+#ksPdfStatus{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.kspdf-empty{margin:auto;text-align:center;color:var(--tx2);font-size:14px;line-height:1.8;}
+.kspdf-empty b{display:block;font-size:20px;color:var(--tx);margin-bottom:6px;}
+@media (max-width:820px){
+  .kspdf-btn{padding:9px 11px;font-size:13px;}
+  #ksPdfTitle{display:none;}
+  #ksPdfPages{padding:40px 6px 16px;}
+  .kspdf-props{gap:5px;padding:6px;}
+}
 </style>
 </head>
 <body>
@@ -336,6 +396,7 @@ body.ks-fx-open #toast{bottom:auto;top:92px;}
   <button class="mbtn" id="btnNew"   onclick="openNewModal()">✚ Yeni Tuval</button>
   <button class="mbtn" id="btnPhoto" onclick="document.getElementById('photoInput').click()">📷 Resim Ekle</button>
   <button class="mbtn" id="btnFx" onclick="ksFxOpen()" title="Filtreler, efektler, yazı ve sticker">✨ Efektler</button>
+  <button class="mbtn" id="btnPdf" onclick="ksPdfOpenUI();if(!KSPDF.pages.length)ksPdfPick()" title="PDF aç, metni düzenle, PDF olarak kaydet">📄 PDF</button>
   <button class="mbtn" id="btnProjSave" onclick="saveProject()" title="Projeyi katmanlarıyla kaydet (Ctrl+Shift+S)">💾 Proje Kaydet</button>
   <button class="mbtn" id="btnProjOpen" onclick="document.getElementById('projInput').click()" title="Proje aç (Ctrl+Shift+O)">📂 Proje Aç</button>
   <div class="msep"></div>
@@ -1259,6 +1320,50 @@ body.ks-fx-open #toast{bottom:auto;top:92px;}
 
 <div id="toast"></div>
 <div id="ksPanelScrim" onclick="ksClosePanel()"></div>
+<div id="ksPdf" data-tool="edit">
+  <div class="kspdf-top">
+    <button class="kspdf-btn" onclick="ksPdfClose()" title="Editöre dön">✕</button>
+    <button class="kspdf-btn" onclick="ksPdfPick()">📂 PDF Aç</button>
+    <span id="ksPdfTitle"></span>
+    <span class="sep"></span>
+    <button class="kspdf-btn on" data-tool="edit" onclick="ksPdfTool('edit')" title="Var olan metne tıkla ve düzenle">✏️ Metni Düzenle</button>
+    <button class="kspdf-btn" data-tool="text" onclick="ksPdfTool('text')" title="Tıkladığın yere yeni metin">T+ Metin Ekle</button>
+    <button class="kspdf-btn" data-tool="select" onclick="ksPdfTool('select')" title="Seç, taşı, boyutlandır">↖ Seç</button>
+    <button class="kspdf-btn" data-tool="white" onclick="ksPdfTool('white')" title="Alanı arka plan rengiyle kapat">⬜ Kapat</button>
+    <button class="kspdf-btn" data-tool="hl" onclick="ksPdfTool('hl')">🖍 Vurgula</button>
+    <button class="kspdf-btn" data-tool="ink" onclick="ksPdfTool('ink')" title="Serbest çizim / imza">✍ Çiz</button>
+    <button class="kspdf-btn" data-tool="img" onclick="ksPdfTool('img')" title="Görsel veya imza resmi ekle">🖼 Görsel</button>
+    <span class="sep"></span>
+    <button class="kspdf-btn" onclick="ksPdfUndo()" title="Geri al (Ctrl+Z)">↶</button>
+    <button class="kspdf-btn" onclick="ksPdfRedo()" title="İleri al (Ctrl+Y)">↷</button>
+    <button class="kspdf-btn" id="ksPdfDel" onclick="ksPdfDelSel()" title="Seçileni sil (Del)" disabled>🗑</button>
+    <span class="sep"></span>
+    <button class="kspdf-btn" onclick="ksPdfZoom(0.85)">−</button>
+    <button class="kspdf-btn" id="ksPdfZoomV" onclick="ksPdfZoom('fit')" title="Sığdır">100%</button>
+    <button class="kspdf-btn" onclick="ksPdfZoom(1.18)">+</button>
+    <span class="sep"></span>
+    <button class="kspdf-btn save" onclick="ksPdfSave()" title="PDF olarak kaydet (Ctrl+S)">💾 PDF Kaydet</button>
+    <button class="kspdf-btn" onclick="ksPdfSave(true)" title="Hassas bilgi için: eski metni tamamen yok eder (sayfalar görüntüye dönüşür, metin seçilemez)">🔒 Düzleştir</button>
+  </div>
+  <div class="kspdf-props">
+    <select id="ksPdfFam" onchange="ksPdfProp('fam',this.value)" title="Yazı tipi">
+      <option value="sans">Sans (Arial/Helvetica/Calibri)</option>
+      <option value="serif">Serif (Times/Georgia)</option>
+      <option value="mono">Mono (Courier)</option>
+    </select>
+    <button class="kspdf-btn" onclick="ksPdfSizeStep(-0.5)">A−</button>
+    <input type="number" id="ksPdfSize" min="4" max="300" step="0.5" value="12" onchange="ksPdfProp('size',this.value)" title="Yazı boyutu (pt)">
+    <button class="kspdf-btn" onclick="ksPdfSizeStep(0.5)">A+</button>
+    <button class="kspdf-btn" id="ksPdfB" onclick="ksPdfProp('b')" style="font-weight:800">B</button>
+    <button class="kspdf-btn" id="ksPdfI" onclick="ksPdfProp('i')" style="font-style:italic">I</button>
+    <input type="color" id="ksPdfColor" value="#000000" oninput="ksPdfProp('color',this.value)" title="Renk">
+    <span id="ksPdfDetect"></span>
+  </div>
+  <div id="ksPdfPages"><div class="kspdf-empty"><b>📄 PDF Düzenleyici</b>PDF aç → metne tıkla → düzenle → PDF olarak kaydet.<br>Yazı tipi, boyutu ve rengi tıkladığın metinden otomatik alınır.<br><button class="kspdf-btn save" onclick="ksPdfPick()" style="margin-top:10px">📂 PDF Aç</button></div></div>
+  <div class="kspdf-foot"><span id="ksPdfStatus">Dosya seçilmedi</span><span id="ksPdfPageNo"></span></div>
+  <input type="file" id="ksPdfInput" accept="application/pdf,.pdf" style="display:none" onchange="ksPdfFile(this)">
+  <input type="file" id="ksPdfImgInput" accept="image/*" style="display:none" onchange="ksPdfImgFile(this)">
+</div>
 <div id="ksFx" class="ksfx" role="dialog" aria-label="Efektler">
   <div class="ksfx-head">
     <div class="ksfx-tabs">
@@ -1304,7 +1409,7 @@ body.ks-fx-open #toast{bottom:auto;top:92px;}
 </div>
 <input type="file" id="ksLogoInput" accept="image/*" style="display:none" onchange="ksLogoFile(this)">
 <div id="eraserCursor"></div>
-<input type="file" id="photoInput" accept="image/*" style="display:none" onchange="loadPhotoFile(this)">
+<input type="file" id="photoInput" accept="image/*,application/pdf,.pdf" style="display:none" onchange="loadPhotoFile(this)">
 <input type="file" id="projInput" accept=".krersn,application/json" style="display:none" onchange="loadProjectInput(this)">
 
 <script>
@@ -6311,6 +6416,632 @@ document.addEventListener('wheel',e=>{
   const s=e.target.closest&&e.target.closest('.ksfx-strip'); if(!s||Math.abs(e.deltaX)>Math.abs(e.deltaY)) return;
   e.preventDefault(); s.scrollLeft+=e.deltaY;
 },{passive:false});
+
+
+// ═══════════════════════════════════════════════════
+//  KRERSN STUDIO — v5: PDF DÜZENLEYİCİ
+//  PDF aç · metne tıkla → düzenle (yazı tipi/boyut/renk otomatik)
+//  metin ekle · beyaz kapat · vurgula · çiz · görsel/imza · sayfa sil
+//  PDF olarak kaydet (orijinal sayfalar korunur, düzenlemeler üstüne işlenir)
+// ═══════════════════════════════════════════════════
+const KSPDF = {
+  libsOk: false, saveLibsOk: false, doc: null, bytes: null, name: 'belge',
+  pages: [], zoom: 1, tool: 'edit', sel: null, undo: [], redo: [], fontCache: {}, busy: false,
+  props: { fam: 'sans', size: 12, b: false, i: false, color: '#000000' }
+};
+const KSPDF_ASC = 0.988;          // Noto: CSS line-height 1.2'de taban çizgisinin üstten oranı
+const KSPDF_LH = 1.2;
+const KSPDF_FONTS = {
+  sans:  { r: 'fonts/NotoSans-Regular.ttf', b: 'fonts/NotoSans-Bold.ttf', i: 'fonts/NotoSans-Italic.ttf', bi: 'fonts/NotoSans-BoldItalic.ttf' },
+  serif: { r: 'fonts/NotoSerif-Regular.ttf', b: 'fonts/NotoSerif-Bold.ttf', i: 'fonts/NotoSerif-Italic.ttf', bi: 'fonts/NotoSerif-BoldItalic.ttf' },
+  mono:  { r: 'fonts/NotoSansMono-Regular.ttf', b: 'fonts/NotoSansMono-Bold.ttf', i: 'fonts/NotoSansMono-Regular.ttf', bi: 'fonts/NotoSansMono-Bold.ttf' }
+};
+const KSPDF_CSSFAM = { sans: 'KSPdfSans', serif: 'KSPdfSerif', mono: 'KSPdfMono' };
+
+function _ksLoadScript(src) {
+  return new Promise((res, rej) => {
+    const s = document.createElement('script'); s.src = src; s.onload = res;
+    s.onerror = () => rej(new Error('Yüklenemedi: ' + src)); document.head.appendChild(s);
+  });
+}
+async function ksPdfLibs() {
+  if (KSPDF.libsOk) return;
+  await _ksLoadScript('lib/pdf.min.js');
+  if (location.protocol === 'file:') { await _ksLoadScript('lib/pdf.worker.min.js'); }
+  else pdfjsLib.GlobalWorkerOptions.workerSrc = 'lib/pdf.worker.min.js';
+  KSPDF.libsOk = true;
+}
+async function ksPdfSaveLibs() {
+  if (KSPDF.saveLibsOk) return;
+  await _ksLoadScript('lib/pdf-lib.min.js'); await _ksLoadScript('lib/fontkit.umd.min.js');
+  KSPDF.saveLibsOk = true;
+}
+
+// ─── Aç / kapat ───
+function ksPdfOpenUI() {
+  document.getElementById('ksPdf').classList.add('open');
+  document.body.classList.add('ks-pdf-open');
+  if (typeof ksClosePanel === 'function') ksClosePanel();
+  if (typeof ksFxOpen === 'function' && KSFX && KSFX.open) ksFxClose();
+}
+function ksPdfClose() {
+  if (KSPDF.pages.some(p => p.objs.length) && !confirm('Kaydedilmemiş PDF düzenlemeleri kapanacak. Devam edilsin mi?')) return;
+  document.getElementById('ksPdf').classList.remove('open');
+  document.body.classList.remove('ks-pdf-open');
+}
+function ksPdfPick() { document.getElementById('ksPdfInput').click(); }
+function ksPdfFile(inp) { const f = inp.files && inp.files[0]; inp.value = ''; if (f) ksPdfOpenFile(f); }
+
+async function ksPdfOpenFile(file) {
+  ksPdfOpenUI();
+  const st = document.getElementById('ksPdfStatus');
+  try {
+    st.textContent = 'PDF yükleniyor…';
+    await ksPdfLibs();
+    const bytes = new Uint8Array(await file.arrayBuffer());
+    KSPDF.bytes = bytes.slice(0);
+    KSPDF.name = (file.name || 'belge.pdf').replace(/\.pdf$/i, '');
+    if (KSPDF.doc) { try { KSPDF.doc.destroy(); } catch (e) {} }
+    KSPDF.doc = await pdfjsLib.getDocument({ data: bytes, fontExtraProperties: true, cMapUrl: 'lib/cmaps/', cMapPacked: true, standardFontDataUrl: 'lib/standard_fonts/' }).promise;
+    KSPDF.pages = []; KSPDF.sel = null; KSPDF.undo = []; KSPDF.redo = [];
+    const wrap = document.getElementById('ksPdfPages'); wrap.innerHTML = '';
+    for (let i = 1; i <= KSPDF.doc.numPages; i++) {
+      const pg = await KSPDF.doc.getPage(i);
+      const vp1 = pg.getViewport({ scale: 1 });
+      const p = { n: i, pg, vp1, w: vp1.width, h: vp1.height, rot: pg.rotate || 0, deleted: false, objs: [], items: null, el: null };
+      KSPDF.pages.push(p); wrap.appendChild(_ksPdfPageEl(p));
+    }
+    KSPDF.zoom = _ksPdfFitZoom(); _ksPdfApplyZoom();
+    document.getElementById('ksPdfTitle').textContent = KSPDF.name + '.pdf · ' + KSPDF.doc.numPages + ' sayfa';
+    st.textContent = 'Metne tıkla → düzenle. Yazı tipi ve boyutu otomatik seçilir.';
+    ksPdfTool('edit');
+    // Kaydetme kütüphanelerini arka planda hazırla
+    ksPdfSaveLibs().catch(() => {});
+  } catch (err) {
+    console.error(err);
+    st.textContent = '❌ PDF açılamadı: ' + (err && err.message || err);
+    toast(/password/i.test(String(err && err.name)) ? '🔒 Şifreli PDF desteklenmiyor' : '❌ PDF açılamadı');
+  }
+}
+
+function _ksPdfFitZoom() {
+  const box = document.getElementById('ksPdfPages');
+  const maxW = Math.max(...KSPDF.pages.map(p => p.w));
+  const z = (box.clientWidth - 32) / maxW;
+  return Math.max(0.3, Math.min(2, z));
+}
+function ksPdfZoom(f) { KSPDF.zoom = Math.max(0.25, Math.min(4, f === 'fit' ? _ksPdfFitZoom() : KSPDF.zoom * f)); _ksPdfApplyZoom(); }
+function _ksPdfApplyZoom() {
+  document.getElementById('ksPdfZoomV').textContent = Math.round(KSPDF.zoom * 100) + '%';
+  KSPDF.pages.forEach(p => { _ksPdfSizePage(p); p.rendered = false; });
+  _ksPdfRenderVisible();
+}
+
+// ─── Sayfa DOM ───
+function _ksPdfPageEl(p) {
+  const el = document.createElement('div'); el.className = 'kspdf-page'; el.dataset.n = p.n;
+  el.innerHTML = '<canvas></canvas><div class="kspdf-ov"></div><svg class="kspdf-ink"></svg>' +
+    '<div class="kspdf-pbar"><span>Sayfa ' + p.n + '</span>' +
+    '<button title="Sayfayı görsel olarak tuvale aktar" onclick="ksPdfToCanvas(' + p.n + ')">🖼</button>' +
+    '<button title="Sayfayı sil" onclick="ksPdfDelPage(' + p.n + ')">🗑</button></div>';
+  p.el = el; p.cnv = el.querySelector('canvas'); p.ov = el.querySelector('.kspdf-ov'); p.svg = el.querySelector('svg');
+  _ksPdfBindPage(p);
+  return el;
+}
+function _ksPdfSizePage(p) {
+  const z = KSPDF.zoom;
+  p.el.style.width = (p.w * z) + 'px'; p.el.style.height = (p.h * z) + 'px';
+  p.svg.setAttribute('viewBox', '0 0 ' + p.w + ' ' + p.h);
+  _ksPdfDrawObjs(p);
+}
+let _ksPdfRT = null;
+function _ksPdfRenderVisible() {
+  clearTimeout(_ksPdfRT);
+  _ksPdfRT = setTimeout(async () => {
+    const box = document.getElementById('ksPdfPages'), br = box.getBoundingClientRect();
+    for (const p of KSPDF.pages) {
+      if (p.rendered || p.deleted) continue;
+      const r = p.el.getBoundingClientRect();
+      if (r.bottom < br.top - 600 || r.top > br.bottom + 600) continue;
+      p.rendered = true; await _ksPdfRender(p);
+    }
+  }, 60);
+}
+async function _ksPdfRender(p) {
+  const dpr = Math.min(2.5, window.devicePixelRatio || 1);
+  const vp = p.pg.getViewport({ scale: KSPDF.zoom * dpr });
+  p.cnv.width = Math.floor(vp.width); p.cnv.height = Math.floor(vp.height);
+  p.cnv.style.width = (p.w * KSPDF.zoom) + 'px'; p.cnv.style.height = (p.h * KSPDF.zoom) + 'px';
+  p.cscale = KSPDF.zoom * dpr;
+  try {
+    if (p.task) { try { p.task.cancel(); } catch (e) {} }
+    p.task = p.pg.render({ canvasContext: p.cnv.getContext('2d', { willReadFrequently: true }), viewport: vp });
+    await p.task.promise;
+  } catch (e) { if (e && e.name !== 'RenderingCancelledException') console.warn(e); }
+  if (!p.items) await _ksPdfLoadText(p);
+}
+async function _ksPdfLoadText(p) {
+  const tc = await p.pg.getTextContent();
+  const U = pdfjsLib.Util; p.items = [];
+  for (const it of tc.items) {
+    if (!it.str || !it.str.trim()) continue;
+    const tx = U.transform(p.vp1.transform, it.transform);
+    if (Math.abs(tx[1]) > 0.01 || Math.abs(tx[2]) > 0.01) continue;     // döndürülmüş metin
+    const fh = Math.hypot(tx[2], tx[3]);
+    const w = it.width * (p.vp1.scale || 1);
+    let fname = '', bold = false, italic = false, serif = false, mono = false;
+    try { if (p.pg.commonObjs.has(it.fontName)) { const f = p.pg.commonObjs.get(it.fontName); fname = f.name || ''; bold = !!(f.bold || f.black); italic = !!f.italic; serif = !!f.isSerifFont; mono = !!f.isMonospace; } } catch (e) {}
+    const st = tc.styles[it.fontName] || {};
+    const nm = (fname + ' ' + (st.fontFamily || '')).toLowerCase();
+    if (/bold|black|heavy|semibold|demi/.test(nm)) bold = true;
+    if (/italic|oblique/.test(nm)) italic = true;
+    if (/courier|mono|consol|menlo/.test(nm)) mono = true;
+    else if (/times|serif|georgia|garamond|cambria|book|minion|roman/.test(nm) && !/sans/.test(nm)) serif = true;
+    p.items.push({ str: it.str, x: tx[4], base: tx[5], size: fh, w: Math.max(w, fh * 0.3), fname: fname.replace(/^[A-Z]{6}\+/, '') || st.fontFamily || '?',
+      fam: mono ? 'mono' : (serif ? 'serif' : 'sans'), b: bold, i: italic, used: false });
+  }
+}
+
+// ─── Nesneleri çiz ───
+function _ksPdfDrawObjs(p) {
+  const z = KSPDF.zoom; p.ov.innerHTML = ''; let ink = '';
+  p.objs.forEach((o, k) => {
+    if (o.t === 'ink') {
+      ink += '<path d="' + o.pts.map((q, j) => (j ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join(' ') + '" stroke="' + o.color + '" stroke-width="' + o.wd + '" fill="none" stroke-linecap="round" stroke-linejoin="round" data-k="' + k + '"' + (KSPDF.sel && KSPDF.sel.o === o ? ' class="sel"' : '') + '/>';
+      return;
+    }
+    const d = document.createElement('div'); d.dataset.k = k;
+    if (o.t === 'text') {
+      if (o.cover) {
+        const c = document.createElement('div'); c.className = 'kspdf-cover';
+        Object.assign(c.style, { left: o.cover.x * z + 'px', top: o.cover.y * z + 'px', width: o.cover.w * z + 'px', height: o.cover.h * z + 'px', background: o.cover.color });
+        p.ov.appendChild(c);
+      }
+      d.className = 'kspdf-text';
+      Object.assign(d.style, { left: o.x * z + 'px', top: (o.y - KSPDF_ASC * o.size) * z + 'px', fontSize: o.size * z + 'px',
+        fontFamily: KSPDF_CSSFAM[o.fam], fontWeight: o.b ? 700 : 400, fontStyle: o.i ? 'italic' : 'normal', color: o.color });
+      d.textContent = o.text;
+    } else if (o.t === 'rect') {
+      d.className = 'kspdf-rect ' + o.mode;
+      Object.assign(d.style, { left: o.x * z + 'px', top: o.y * z + 'px', width: o.w * z + 'px', height: o.h * z + 'px', background: o.mode === 'white' ? o.color : 'rgba(255,230,0,.38)' });
+    } else if (o.t === 'img') {
+      d.className = 'kspdf-img';
+      Object.assign(d.style, { left: o.x * z + 'px', top: o.y * z + 'px', width: o.w * z + 'px', height: o.h * z + 'px' });
+      const im = document.createElement('img'); im.src = o.src; im.draggable = false; d.appendChild(im);
+    }
+    if (KSPDF.sel && KSPDF.sel.o === o) {
+      d.classList.add('sel');
+      if (o.t !== 'text') { const h = document.createElement('div'); h.className = 'kspdf-h'; d.appendChild(h); }
+    }
+    p.ov.appendChild(d);
+  });
+  p.svg.innerHTML = ink;
+  if (KSPDF.sel && KSPDF.sel.p === p && KSPDF.sel.o.t === 'text' && KSPDF.sel.editing) _ksPdfStartEdit(p, KSPDF.sel.o, false);
+}
+
+// ─── Geri al ───
+function _ksPdfSnap() {
+  KSPDF.undo.push(JSON.stringify(KSPDF.pages.map(p => ({ objs: p.objs, used: (p.items || []).map(i => i.used), deleted: p.deleted }))));
+  if (KSPDF.undo.length > 60) KSPDF.undo.shift(); KSPDF.redo = [];
+}
+function _ksPdfRestore(s) {
+  const a = JSON.parse(s);
+  KSPDF.pages.forEach((p, k) => { p.objs = a[k].objs; p.deleted = a[k].deleted; p.el.classList.toggle('deleted', p.deleted);
+    if (p.items) p.items.forEach((it, j) => it.used = !!a[k].used[j]); _ksPdfDrawObjs(p); });
+  KSPDF.sel = null; _ksPdfPropsUI();
+}
+function ksPdfUndo() {
+  _ksPdfCommitEdit();
+  if (!KSPDF.undo.length) return;
+  KSPDF.redo.push(JSON.stringify(KSPDF.pages.map(p => ({ objs: p.objs, used: (p.items || []).map(i => i.used), deleted: p.deleted }))));
+  _ksPdfRestore(KSPDF.undo.pop());
+}
+function ksPdfRedo() {
+  if (!KSPDF.redo.length) return;
+  KSPDF.undo.push(JSON.stringify(KSPDF.pages.map(p => ({ objs: p.objs, used: (p.items || []).map(i => i.used), deleted: p.deleted }))));
+  _ksPdfRestore(KSPDF.redo.pop());
+}
+
+// ─── Araçlar ───
+function ksPdfTool(t) {
+  _ksPdfCommitEdit();
+  KSPDF.tool = t;
+  document.querySelectorAll('#ksPdf [data-tool]').forEach(b => b.classList.toggle('on', b.dataset.tool === t));
+  document.getElementById('ksPdf').dataset.tool = t;
+  if (t === 'img') { document.getElementById('ksPdfImgInput').click(); ksPdfTool('select'); }
+}
+function _ksPdfPt(p, e) {
+  const r = p.el.getBoundingClientRect();
+  return [(e.clientX - r.left) / KSPDF.zoom, (e.clientY - r.top) / KSPDF.zoom];
+}
+function _ksPdfHitObj(p, x, y) {
+  for (let k = p.objs.length - 1; k >= 0; k--) {
+    const o = p.objs[k];
+    if (o.t === 'text') {
+      const lines = o.text.split('\n'), w = _ksPdfTextW(o), h = lines.length * o.size * KSPDF_LH;
+      const top = o.y - KSPDF_ASC * o.size;
+      if (x >= o.x - 3 && x <= o.x + w + 3 && y >= top - 2 && y <= top + h + 2) return o;
+    } else if (o.t === 'ink') {
+      for (const q of o.pts) if (Math.hypot(q[0] - x, q[1] - y) < Math.max(5, o.wd * 2)) return o;
+    } else if (x >= o.x && x <= o.x + o.w && y >= o.y && y <= o.y + o.h) return o;
+  }
+  return null;
+}
+const _ksPdfMC = document.createElement('canvas').getContext('2d');
+function _ksPdfTextW(o) {
+  _ksPdfMC.font = (o.i ? 'italic ' : '') + (o.b ? '700 ' : '400 ') + o.size + 'px ' + KSPDF_CSSFAM[o.fam];
+  return Math.max(o.size * 0.5, ...o.text.split('\n').map(l => _ksPdfMC.measureText(l).width));
+}
+
+function _ksPdfTap(p, x, y) {
+  _ksPdfCommitEdit();
+  if (KSPDF.tool === 'edit') { if (!_ksPdfEditExisting(p, x, y)) _ksPdfSelect(null); return; }
+  if (KSPDF.tool === 'text') {
+    _ksPdfSnap();
+    const pr = KSPDF.props;
+    const o = { t: 'text', x, y: y + pr.size * 0.35, size: pr.size, fam: pr.fam, b: pr.b, i: pr.i, color: pr.color, text: 'Metin', cover: null, fresh: true };
+    p.objs.push(o); ksPdfTool('select'); _ksPdfSelect(p, o, true);
+  }
+}
+function _ksPdfBindPage(p) {
+  let drag = null, tapPend = null;
+  p.el.addEventListener('pointerdown', e => {
+    if (e.target.closest('.kspdf-pbar') || p.deleted) return;
+    if (e.target.isContentEditable) return;
+    const [x, y] = _ksPdfPt(p, e); const tool = KSPDF.tool;
+    // Seçili nesne tutamağı (boyutlandır)
+    if (e.target.classList.contains('kspdf-h') && KSPDF.sel) {
+      _ksPdfSnap(); const o = KSPDF.sel.o; drag = { mode: 'resize', o, x0: x, y0: y, w0: o.w, h0: o.h, ar: o.w / o.h };
+    } else if (tool === 'select' || tool === 'edit') {
+      const o = _ksPdfHitObj(p, x, y);
+      if (o) {
+        if (KSPDF.sel && KSPDF.sel.o === o && o.t === 'text') return;   // düzenleme içi tıklama
+        _ksPdfCommitEdit(); _ksPdfSelect(p, o, tool === 'edit' && o.t === 'text');
+        _ksPdfSnap(); drag = { mode: 'move', o, x0: x, y0: y, moved: false, orig: JSON.parse(JSON.stringify(o)) };
+      } else if (tool === 'edit') {
+        if (e.pointerType === 'touch') { tapPend = { x, y, cx: e.clientX, cy: e.clientY }; return; }
+        _ksPdfTap(p, x, y); e.preventDefault(); return;
+      } else { _ksPdfCommitEdit(); _ksPdfSelect(null); return; }
+    } else if (tool === 'text') {
+      if (e.pointerType === 'touch') { tapPend = { x, y, cx: e.clientX, cy: e.clientY }; return; }
+      _ksPdfTap(p, x, y); e.preventDefault(); return;
+    } else if (tool === 'white' || tool === 'hl') {
+      _ksPdfCommitEdit(); _ksPdfSnap();
+      const o = { t: 'rect', mode: tool === 'white' ? 'white' : 'hl', x, y, w: 1, h: 1, color: '#ffffff' };
+      if (tool === 'white') o.color = _ksPdfSampleBg(p, x, y, 1, 1) || '#ffffff';
+      p.objs.push(o); drag = { mode: 'rect', o, x0: x, y0: y };
+    } else if (tool === 'ink') {
+      _ksPdfCommitEdit(); _ksPdfSnap();
+      const o = { t: 'ink', pts: [[x, y]], color: KSPDF.props.color, wd: Math.max(0.8, KSPDF.props.size / 6) };
+      p.objs.push(o); drag = { mode: 'ink', o };
+    }
+    if (drag) { try { p.el.setPointerCapture(e.pointerId); } catch (_) {} e.preventDefault(); }
+  });
+  p.el.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const [x, y] = _ksPdfPt(p, e); const o = drag.o;
+    if (drag.mode === 'move') {
+      const dx = x - drag.x0, dy = y - drag.y0;
+      if (!drag.moved && Math.hypot(dx, dy) < 3 / KSPDF.zoom) return;
+      drag.moved = true; o.x = drag.orig.x + dx; o.y = drag.orig.y + dy;
+      if (o.t === 'ink') o.pts = drag.orig.pts.map(q => [q[0] + dx, q[1] + dy]);
+      if (o.t === 'text' && KSPDF.sel) KSPDF.sel.editing = false;
+    } else if (drag.mode === 'rect') {
+      o.x = Math.min(x, drag.x0); o.y = Math.min(y, drag.y0); o.w = Math.abs(x - drag.x0); o.h = Math.abs(y - drag.y0);
+    } else if (drag.mode === 'ink') {
+      o.pts.push([x, y]);
+    } else if (drag.mode === 'resize') {
+      o.w = Math.max(6, drag.w0 + (x - drag.x0));
+      o.h = o.t === 'img' ? o.w / drag.ar : Math.max(4, drag.h0 + (y - drag.y0));
+    }
+    _ksPdfDrawObjs(p);
+  });
+  const end = (e) => {
+    if (tapPend) { const t = tapPend; tapPend = null;
+      if (e && e.type === 'pointerup' && Math.hypot(e.clientX - t.cx, e.clientY - t.cy) < 10) _ksPdfTap(p, t.x, t.y); return; }
+    if (!drag) return;
+    const d = drag; drag = null;
+    if (d.mode === 'move' && !d.moved) { KSPDF.undo.pop(); if (d.o.t === 'text' && KSPDF.tool === 'edit') _ksPdfSelect(p, d.o, true); return; }
+    if (d.mode === 'rect' && (d.o.w < 2 || d.o.h < 2)) { p.objs.splice(p.objs.indexOf(d.o), 1); KSPDF.undo.pop(); }
+    if (d.mode === 'rect' && d.o.mode === 'white') d.o.color = _ksPdfSampleBg(p, d.o.x, d.o.y, d.o.w, d.o.h) || '#ffffff';
+    if (d.mode === 'ink' && d.o.pts.length < 2) { p.objs.splice(p.objs.indexOf(d.o), 1); KSPDF.undo.pop(); }
+    _ksPdfDrawObjs(p);
+  };
+  p.el.addEventListener('pointerup', end); p.el.addEventListener('pointercancel', end);
+}
+
+// ─── Var olan metne tıkla → düzenlenebilir kopya + kapatma ───
+function _ksPdfEditExisting(p, x, y) {
+  if (!p.items) return false;
+  let best = null, bd = 1e9;
+  for (const it of p.items) {
+    if (it.used) continue;
+    const top = it.base - it.size * 0.9, bot = it.base + it.size * 0.28;
+    if (x >= it.x - 2 && x <= it.x + it.w + 2 && y >= top && y <= bot) {
+      const d = Math.abs(y - (it.base - it.size * 0.3)); if (d < bd) { bd = d; best = it; }
+    }
+  }
+  if (!best) { toast('Bu noktada düzenlenebilir metin yok — yeni yazı için "Metin Ekle"'); return false; }
+  _ksPdfSnap();
+  const it = best; it.used = true;
+  const cover = { x: it.x - 1, y: it.base - it.size * 0.92, w: it.w + 2.5, h: it.size * 1.22 };
+  const bg = _ksPdfSampleBg(p, cover.x, cover.y, cover.w, cover.h) || '#ffffff';
+  cover.color = bg;
+  const color = _ksPdfSampleInk(p, cover.x, cover.y, cover.w, cover.h, bg) || '#000000';
+  const o = { t: 'text', x: it.x, y: it.base, size: Math.round(it.size * 2) / 2, fam: it.fam, b: it.b, i: it.i, color, text: it.str, cover, src: it.fname };
+  p.objs.push(o);
+  _ksPdfSelect(p, o, true);
+  return true;
+}
+function _ksPdfPx(p, x, y) {
+  const s = p.cscale || KSPDF.zoom; return [Math.round(x * s), Math.round(y * s)];
+}
+function _ksPdfSampleBg(p, x, y, w, h) {
+  try {
+    const ctx = p.cnv.getContext('2d', { willReadFrequently: true });
+    const [x0, y0] = _ksPdfPx(p, x - 2, y - 2), [x1, y1] = _ksPdfPx(p, x + w + 2, y + h + 2);
+    const pts = []; const step = Math.max(1, Math.floor((x1 - x0) / 20));
+    for (let X = x0; X <= x1; X += step) { pts.push([X, y0]); pts.push([X, y1]); }
+    for (let Y = y0; Y <= y1; Y += Math.max(1, Math.floor((y1 - y0) / 6))) { pts.push([x0, Y]); pts.push([x1, Y]); }
+    const cols = pts.filter(q => q[0] >= 0 && q[1] >= 0 && q[0] < p.cnv.width && q[1] < p.cnv.height)
+      .map(q => Array.from(ctx.getImageData(q[0], q[1], 1, 1).data));
+    if (!cols.length) return null;
+    const key = c => (c[0] >> 3) + ',' + (c[1] >> 3) + ',' + (c[2] >> 3); const cnt = {};
+    let bestK = null, bestN = 0;
+    cols.forEach(c => { const k = key(c); cnt[k] = (cnt[k] || 0) + 1; if (cnt[k] > bestN) { bestN = cnt[k]; bestK = c; } });
+    if (bestK[3] < 10) return '#ffffff';
+    return _ksHex(bestK);
+  } catch (e) { return null; }
+}
+function _ksPdfSampleInk(p, x, y, w, h, bgHex) {
+  try {
+    const ctx = p.cnv.getContext('2d', { willReadFrequently: true });
+    const [x0, y0] = _ksPdfPx(p, x, y), [x1, y1] = _ksPdfPx(p, x + w, y + h);
+    const W = Math.max(1, x1 - x0), H = Math.max(1, y1 - y0);
+    const d = ctx.getImageData(x0, y0, W, H).data; const bg = _ksRgb(bgHex);
+    let best = [], bd = 0;
+    for (let i = 0; i < d.length; i += 4) {
+      const dist = Math.abs(d[i] - bg[0]) + Math.abs(d[i + 1] - bg[1]) + Math.abs(d[i + 2] - bg[2]);
+      if (dist > bd * 0.85) { if (dist > bd) bd = dist; best.push([dist, d[i], d[i + 1], d[i + 2]]); }
+    }
+    best = best.filter(q => q[0] >= bd * 0.85); if (!best.length || bd < 40) return null;
+    const avg = [0, 1, 2].map(c => Math.round(best.reduce((a, q) => a + q[c + 1], 0) / best.length));
+    return _ksHex(avg);
+  } catch (e) { return null; }
+}
+function _ksHex(c) { return '#' + [0, 1, 2].map(i => ('0' + c[i].toString(16)).slice(-2)).join(''); }
+function _ksRgb(h) { const n = parseInt(h.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
+
+// ─── Seçim + özellik çubuğu (yazı tipi/boyut otomatik) ───
+function _ksPdfSelect(p, o, edit) {
+  if (!p) { KSPDF.sel = null; KSPDF.pages.forEach(_ksPdfDrawObjs); _ksPdfPropsUI(); return; }
+  KSPDF.sel = { p, o, editing: !!edit && o.t === 'text' };
+  if (o.t === 'text') Object.assign(KSPDF.props, { fam: o.fam, size: o.size, b: o.b, i: o.i, color: o.color });
+  if (o.t === 'ink') Object.assign(KSPDF.props, { color: o.color });
+  KSPDF.pages.forEach(_ksPdfDrawObjs);
+  _ksPdfPropsUI();
+}
+function _ksPdfStartEdit(p, o, selectAll) {
+  const el = p.ov.querySelector('.kspdf-text.sel'); if (!el) return;
+  el.contentEditable = 'plaintext-only';
+  if (el.contentEditable !== 'plaintext-only') el.contentEditable = 'true';
+  el.spellcheck = false;
+  el.oninput = () => { o.text = el.innerText.replace(/\n$/, ''); };
+  el.onkeydown = ev => { if (ev.key === 'Escape') { ev.preventDefault(); _ksPdfCommitEdit(); _ksPdfSelect(null); } ev.stopPropagation(); };
+  setTimeout(() => {
+    if (!el.isConnected) return;
+    el.focus();
+    if (o.fresh || selectAll) { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); o.fresh = false; }
+  }, 0);
+}
+function _ksPdfCommitEdit() {
+  const s = KSPDF.sel; if (!s || s.o.t !== 'text' || !s.editing) return;
+  const el = s.p.ov.querySelector('.kspdf-text.sel');
+  if (el) s.o.text = el.innerText.replace(/\n$/, '');
+  s.editing = false;
+  if (!s.o.text.trim() && !s.o.cover) { s.p.objs.splice(s.p.objs.indexOf(s.o), 1); KSPDF.sel = null; }
+  _ksPdfDrawObjs(s.p);
+}
+function _ksPdfPropsUI() {
+  const pr = KSPDF.props, s = KSPDF.sel;
+  document.getElementById('ksPdfFam').value = pr.fam;
+  document.getElementById('ksPdfSize').value = pr.size;
+  document.getElementById('ksPdfB').classList.toggle('on', pr.b);
+  document.getElementById('ksPdfI').classList.toggle('on', pr.i);
+  document.getElementById('ksPdfColor').value = pr.color;
+  const info = document.getElementById('ksPdfDetect');
+  if (s && s.o.t === 'text' && s.o.src) info.textContent = '🔎 Algılanan: ' + s.o.src + ' · ' + s.o.size + ' pt';
+  else if (s && s.o.t === 'text') info.textContent = '✏️ Yeni metin · ' + s.o.size + ' pt';
+  else info.textContent = '';
+  document.getElementById('ksPdfDel').disabled = !s;
+}
+function ksPdfProp(k, v) {
+  const pr = KSPDF.props;
+  if (k === 'size') { v = Math.max(4, Math.min(300, parseFloat(v) || pr.size)); }
+  if (k === 'b' || k === 'i') v = !pr[k];
+  pr[k] = v;
+  const s = KSPDF.sel;
+  if (s && (s.o.t === 'text' || (s.o.t === 'ink' && k === 'color'))) {
+    _ksPdfCommitEdit(); _ksPdfSnap();
+    if (s.o.t === 'ink') s.o.color = v; else s.o[k] = v;
+    s.editing = s.o.t === 'text'; _ksPdfDrawObjs(s.p);
+  }
+  _ksPdfPropsUI();
+}
+function ksPdfSizeStep(d) { ksPdfProp('size', (Math.round((KSPDF.props.size + d) * 2) / 2)); }
+function ksPdfDelSel() {
+  const s = KSPDF.sel; if (!s) return;
+  _ksPdfSnap(); s.editing = false;
+  const i = s.p.objs.indexOf(s.o);
+  if (s.o.t === 'text' && s.o.cover) s.p.objs.splice(i, 1, { t: 'rect', mode: 'white', x: s.o.cover.x, y: s.o.cover.y, w: s.o.cover.w, h: s.o.cover.h, color: s.o.cover.color });
+  else s.p.objs.splice(i, 1);
+  KSPDF.sel = null; _ksPdfDrawObjs(s.p); _ksPdfPropsUI();
+}
+function ksPdfDelPage(n) {
+  const p = KSPDF.pages[n - 1]; if (!p) return;
+  if (KSPDF.pages.filter(q => !q.deleted).length <= 1 && !p.deleted) { toast('Son sayfa silinemez'); return; }
+  _ksPdfSnap(); p.deleted = !p.deleted; p.el.classList.toggle('deleted', p.deleted);
+  toast(p.deleted ? '🗑 Sayfa ' + n + ' kaydederken çıkarılacak (geri almak için tekrar bas)' : '↩ Sayfa ' + n + ' geri alındı');
+}
+async function ksPdfToCanvas(n) {
+  const p = KSPDF.pages[n - 1]; if (!p) return;
+  const vp = p.pg.getViewport({ scale: 2 });
+  const c = document.createElement('canvas'); c.width = Math.round(vp.width); c.height = Math.round(vp.height);
+  const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height);
+  await p.pg.render({ canvasContext: x, viewport: vp }).promise;
+  c.toBlob(b => {
+    document.getElementById('ksPdf').classList.remove('open'); document.body.classList.remove('ks-pdf-open');
+    if (W) newCanvasTab();
+    setTimeout(() => { closeNewModal && closeNewModal(); readAndPlaceFile(new File([b], KSPDF.name + '_s' + n + '.png', { type: 'image/png' })); }, 120);
+    toast('🖼 Sayfa ' + n + ' tuvale aktarıldı (görsel olarak)');
+  }, 'image/png');
+}
+function ksPdfImgFile(inp) {
+  const f = inp.files && inp.files[0]; inp.value = ''; if (!f || !KSPDF.pages.length) return;
+  const rd = new FileReader();
+  rd.onload = () => {
+    const im = new Image();
+    im.onload = () => {
+      // görünen sayfayı bul
+      const box = document.getElementById('ksPdfPages'), br = box.getBoundingClientRect();
+      const p = KSPDF.pages.find(q => !q.deleted && q.el.getBoundingClientRect().bottom > br.top + 80) || KSPDF.pages[0];
+      const w = p.w * 0.35, h = w * im.height / im.width;
+      _ksPdfSnap();
+      const r = p.el.getBoundingClientRect();
+      const vy = Math.max(0, (br.top + br.height / 2 - r.top) / KSPDF.zoom);
+      const o = { t: 'img', src: rd.result, x: (p.w - w) / 2, y: Math.min(p.h - h, Math.max(0, vy - h / 2)), w, h };
+      p.objs.push(o); _ksPdfSelect(p, o);
+      toast('🖼 Görsel eklendi — sürükle, köşeden boyutlandır');
+    };
+    im.src = rd.result;
+  };
+  rd.readAsDataURL(f);
+}
+
+// ─── Kaydet (PDF) ───
+async function _ksPdfFont(doc, fam, b, i) {
+  const key = fam + (b ? 'b' : '') + (i ? 'i' : '');
+  const v = b && i ? 'bi' : b ? 'b' : i ? 'i' : 'r';
+  if (!KSPDF.fontCache[key + '_bytes']) {
+    const r = await fetch(KSPDF_FONTS[fam][v]); if (!r.ok) throw new Error('Yazı tipi yüklenemedi');
+    KSPDF.fontCache[key + '_bytes'] = await r.arrayBuffer();
+  }
+  if (!doc._ksF) doc._ksF = {};
+  if (!doc._ksF[key]) doc._ksF[key] = await doc.embedFont(KSPDF.fontCache[key + '_bytes'], { subset: false });
+  return doc._ksF[key];
+}
+async function _ksPdfFlatten(bytes) {
+  const src = await pdfjsLib.getDocument({ data: bytes.slice(0), cMapUrl: 'lib/cmaps/', cMapPacked: true, standardFontDataUrl: 'lib/standard_fonts/' }).promise;
+  const out = await PDFLib.PDFDocument.create();
+  for (let i = 1; i <= src.numPages; i++) {
+    const pg = await src.getPage(i); const v1 = pg.getViewport({ scale: 1 }); const vp = pg.getViewport({ scale: 2.5 });
+    const c = document.createElement('canvas'); c.width = Math.round(vp.width); c.height = Math.round(vp.height);
+    const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height);
+    await pg.render({ canvasContext: x, viewport: vp }).promise;
+    const jpg = await out.embedJpg(c.toDataURL('image/jpeg', 0.9));
+    const np = out.addPage([v1.width, v1.height]); np.drawImage(jpg, { x: 0, y: 0, width: v1.width, height: v1.height });
+    document.getElementById('ksPdfStatus').textContent = '🔒 Düzleştiriliyor… ' + i + '/' + src.numPages;
+  }
+  src.destroy();
+  return await out.save();
+}
+async function ksPdfSave(flat) {
+  if (!KSPDF.bytes || KSPDF.busy) return;
+  _ksPdfCommitEdit(); KSPDF.busy = true;
+  const st = document.getElementById('ksPdfStatus'); st.textContent = '💾 PDF hazırlanıyor…';
+  try {
+    await ksPdfSaveLibs();
+    const { PDFDocument, rgb, degrees, BlendMode } = PDFLib;
+    const doc = await PDFDocument.load(KSPDF.bytes, { ignoreEncryption: true, updateMetadata: false });
+    doc.registerFontkit(fontkit);
+    const pages = doc.getPages();
+    const col = h => { const c = _ksRgb(h); return rgb(c[0] / 255, c[1] / 255, c[2] / 255); };
+    for (const p of KSPDF.pages) {
+      if (p.deleted || !p.objs.length) continue;
+      const pg = pages[p.n - 1]; const vp = p.vp1; const rot = p.rot % 360;
+      const U = (x, y) => vp.convertToPdfPoint(x, y);
+      const box = (x, y, w, h) => { const a = U(x, y), b = U(x + w, y + h);
+        return { x: Math.min(a[0], b[0]), y: Math.min(a[1], b[1]), width: Math.abs(b[0] - a[0]), height: Math.abs(b[1] - a[1]) }; };
+      for (const o of p.objs) {
+        if (o.t === 'rect') {
+          if (o.mode === 'white') pg.drawRectangle({ ...box(o.x, o.y, o.w, o.h), color: col(o.color), borderWidth: 0 });
+          else pg.drawRectangle({ ...box(o.x, o.y, o.w, o.h), color: rgb(1, 0.9, 0), opacity: 0.38, blendMode: BlendMode.Multiply, borderWidth: 0 });
+        } else if (o.t === 'text') {
+          if (o.cover) pg.drawRectangle({ ...box(o.cover.x, o.cover.y, o.cover.w, o.cover.h), color: col(o.cover.color), borderWidth: 0 });
+          const font = await _ksPdfFont(doc, o.fam, o.b, o.i);
+          o.text.split('\n').forEach((ln, k) => {
+            if (!ln) return;
+            const P = U(o.x, o.y + k * o.size * KSPDF_LH);
+            pg.drawText(ln, { x: P[0], y: P[1], size: o.size, font, color: col(o.color), rotate: degrees(rot) });
+          });
+        } else if (o.t === 'ink') {
+          for (let k = 1; k < o.pts.length; k++) {
+            const a = U(o.pts[k - 1][0], o.pts[k - 1][1]), b = U(o.pts[k][0], o.pts[k][1]);
+            pg.drawLine({ start: { x: a[0], y: a[1] }, end: { x: b[0], y: b[1] }, thickness: o.wd, color: col(o.color), lineCap: PDFLib.LineCapStyle.Round });
+          }
+        } else if (o.t === 'img') {
+          const isJpg = /^data:image\/jpe?g/.test(o.src);
+          let src = o.src;
+          if (!isJpg && !/^data:image\/png/.test(src)) {   // webp/gif vb. → png
+            const im = new Image(); im.src = src; await im.decode();
+            const c = document.createElement('canvas'); c.width = im.naturalWidth; c.height = im.naturalHeight; c.getContext('2d').drawImage(im, 0, 0); src = c.toDataURL('image/png');
+          }
+          const img = isJpg ? await doc.embedJpg(src) : await doc.embedPng(src);
+          const P = U(o.x, o.y + o.h);
+          pg.drawImage(img, { x: P[0], y: P[1], width: o.w, height: o.h, rotate: degrees(rot) });
+        }
+      }
+    }
+    KSPDF.pages.filter(p => p.deleted).map(p => p.n - 1).sort((a, b) => b - a).forEach(i => doc.removePage(i));
+    let out = await doc.save();
+    if (flat === true) out = await _ksPdfFlatten(out);
+    const blob = new Blob([out], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    _download(url, _safeName(KSPDF.name + (flat === true ? '_duzlestirildi' : '_duzenlendi')) + '.pdf');
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+    st.textContent = '✅ Kaydedildi: ' + KSPDF.name + (flat === true ? '_duzlestirildi' : '_duzenlendi') + '.pdf · ' + humanBytes(blob.size);
+    toast('💾 PDF kaydedildi');
+  } catch (err) {
+    console.error(err); st.textContent = '❌ Kaydedilemedi: ' + (err && err.message || err);
+    toast('❌ PDF kaydedilemedi');
+  } finally { KSPDF.busy = false; }
+}
+
+// ─── Kısayollar, kaydırma, sürükle-bırak ───
+document.addEventListener('keydown', e => {
+  if (!document.body.classList.contains('ks-pdf-open')) return;
+  const t = e.target; const typing = t && (t.isContentEditable || t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT');
+  e.stopImmediatePropagation();
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') { e.preventDefault(); ksPdfSave(); return; }
+  if (typing) return;
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); e.shiftKey ? ksPdfRedo() : ksPdfUndo(); return; }
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'y') { e.preventDefault(); ksPdfRedo(); return; }
+  if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); ksPdfDelSel(); return; }
+  if (e.key === 'Escape') { _ksPdfSelect(null); return; }
+}, true);
+document.addEventListener('DOMContentLoaded', () => {
+  const box = document.getElementById('ksPdfPages');
+  box.addEventListener('scroll', () => {
+    _ksPdfRenderVisible();
+    const br = box.getBoundingClientRect(); const cur = KSPDF.pages.find(p => p.el.getBoundingClientRect().bottom > br.top + br.height / 3);
+    if (cur) document.getElementById('ksPdfPageNo').textContent = cur.n + ' / ' + KSPDF.pages.length;
+  });
+  box.addEventListener('wheel', e => { if (e.ctrlKey) { e.preventDefault(); ksPdfZoom(e.deltaY < 0 ? 1.1 : 0.9); } }, { passive: false });
+  window.addEventListener('resize', () => { if (document.body.classList.contains('ks-pdf-open') && KSPDF.pages.length) _ksPdfRenderVisible(); });
+});
+// .pdf dosyalarını sürükle-bırak ve "Resim Ekle" ile aç
+window.addEventListener('drop', e => {
+  const f = e.dataTransfer && [...e.dataTransfer.files].find(f => /\.pdf$/i.test(f.name) || f.type === 'application/pdf');
+  if (f) { e.preventDefault(); e.stopPropagation(); ksPdfOpenFile(f); }
+}, true);
+(function () {
+  const _lp = loadPhotoFile;
+  loadPhotoFile = function (inp) {
+    const f = inp.files && inp.files[0];
+    if (f && (f.type === 'application/pdf' || /\.pdf$/i.test(f.name))) { inp.value = ''; ksPdfOpenFile(f); return; }
+    return _lp.apply(this, arguments);
+  };
+})();
 
 </script>
 

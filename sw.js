@@ -1,6 +1,6 @@
 // Krersn Studio Editör — service worker
 // Sayfa: önce ağ (güncel sürüm gelsin), ağ yoksa önbellek (çevrimdışı çalışsın).
-const VERSION = 'ks-v4.0.0';
+const VERSION = 'ks-v5.0.0';
 const CORE = [
   './',
   'index.html',
@@ -45,7 +45,7 @@ self.addEventListener('fetch', e => {
 
   e.respondWith(
     caches.match(req).then(hit => hit || fetch(req).then(res => {
-      if (res.ok && url.pathname.includes('/icons/')) {
+      if (res.ok && /\/(icons|lib|fonts)\//.test(url.pathname)) {
         const copy = res.clone();
         caches.open(VERSION).then(c => c.put(req, copy));
       }
