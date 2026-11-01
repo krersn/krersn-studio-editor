@@ -6438,6 +6438,21 @@ const KSPDF_FONTS = {
 };
 const KSPDF_CSSFAM = { sans: 'KSPdfSans', serif: 'KSPdfSerif', mono: 'KSPdfMono' };
 
+// Yerel dosyadan (file://) açıldığında ya da dosya bulunamadığında canlı siteden yükle
+const KSPDF_CDN = 'https://krersnstudio.com/krersn-studio-editor/';
+async function _ksPdfFetchBin(rel) {
+  const urls = location.protocol === 'file:' ? [KSPDF_CDN + rel, rel] : [rel, KSPDF_CDN + rel];
+  let last = null;
+  for (const u of urls) {
+    try { const r = await fetch(u, { cache: 'force-cache' }); if (r.ok) return await r.arrayBuffer(); last = new Error('HTTP ' + r.status + ' ' + rel); }
+    catch (e) { last = e; }
+  }
+  throw new Error('Yazı tipi indirilemedi (' + rel + '). İnternet bağlantısını kontrol et. ' + (last && last.message || ''));
+}
+function _ksPdfBase() { return location.protocol === 'file:' ? KSPDF_CDN : ''; }
+async function _ksLoadScriptAny(rel) {
+  try { await _ksLoadScript(rel); } catch (e) { await _ksLoadScript(KSPDF_CDN + rel); }
+}
 function _ksLoadScript(src) {
   return new Promise((res, rej) => {
     const s = document.createElement('script'); s.src = src; s.onload = res;
@@ -6446,14 +6461,14 @@ function _ksLoadScript(src) {
 }
 async function ksPdfLibs() {
   if (KSPDF.libsOk) return;
-  await _ksLoadScript('lib/pdf.min.js');
-  if (location.protocol === 'file:') { await _ksLoadScript('lib/pdf.worker.min.js'); }
+  await _ksLoadScriptAny('lib/pdf.min.js');
+  if (location.protocol === 'file:') { await _ksLoadScriptAny('lib/pdf.worker.min.js'); }
   else pdfjsLib.GlobalWorkerOptions.workerSrc = 'lib/pdf.worker.min.js';
   KSPDF.libsOk = true;
 }
 async function ksPdfSaveLibs() {
   if (KSPDF.saveLibsOk) return;
-  await _ksLoadScript('lib/pdf-lib.min.js'); await _ksLoadScript('lib/fontkit.umd.min.js');
+  await _ksLoadScriptAny('lib/pdf-lib.min.js'); await _ksLoadScriptAny('lib/fontkit.umd.min.js');
   KSPDF.saveLibsOk = true;
 }
 
@@ -6482,7 +6497,7 @@ async function ksPdfOpenFile(file) {
     KSPDF.bytes = bytes.slice(0);
     KSPDF.name = (file.name || 'belge.pdf').replace(/\.pdf$/i, '');
     if (KSPDF.doc) { try { KSPDF.doc.destroy(); } catch (e) {} }
-    KSPDF.doc = await pdfjsLib.getDocument({ data: bytes, fontExtraProperties: true, cMapUrl: 'lib/cmaps/', cMapPacked: true, standardFontDataUrl: 'lib/standard_fonts/' }).promise;
+    KSPDF.doc = await pdfjsLib.getDocument({ data: bytes, fontExtraProperties: true, cMapUrl: _ksPdfBase() + 'lib/cmaps/', cMapPacked: true, standardFontDataUrl: _ksPdfBase() + 'lib/standard_fonts/' }).promise;
     KSPDF.pages = []; KSPDF.sel = null; KSPDF.undo = []; KSPDF.redo = [];
     const wrap = document.getElementById('ksPdfPages'); wrap.innerHTML = '';
     for (let i = 1; i <= KSPDF.doc.numPages; i++) {
@@ -6923,15 +6938,14 @@ async function _ksPdfFont(doc, fam, b, i) {
   const key = fam + (b ? 'b' : '') + (i ? 'i' : '');
   const v = b && i ? 'bi' : b ? 'b' : i ? 'i' : 'r';
   if (!KSPDF.fontCache[key + '_bytes']) {
-    const r = await fetch(KSPDF_FONTS[fam][v]); if (!r.ok) throw new Error('Yazı tipi yüklenemedi');
-    KSPDF.fontCache[key + '_bytes'] = await r.arrayBuffer();
+    KSPDF.fontCache[key + '_bytes'] = await _ksPdfFetchBin(KSPDF_FONTS[fam][v]);
   }
   if (!doc._ksF) doc._ksF = {};
   if (!doc._ksF[key]) doc._ksF[key] = await doc.embedFont(KSPDF.fontCache[key + '_bytes'], { subset: false });
   return doc._ksF[key];
 }
 async function _ksPdfFlatten(bytes) {
-  const src = await pdfjsLib.getDocument({ data: bytes.slice(0), cMapUrl: 'lib/cmaps/', cMapPacked: true, standardFontDataUrl: 'lib/standard_fonts/' }).promise;
+  const src = await pdfjsLib.getDocument({ data: bytes.slice(0), cMapUrl: _ksPdfBase() + 'lib/cmaps/', cMapPacked: true, standardFontDataUrl: _ksPdfBase() + 'lib/standard_fonts/' }).promise;
   const out = await PDFLib.PDFDocument.create();
   for (let i = 1; i <= src.numPages; i++) {
     const pg = await src.getPage(i); const v1 = pg.getViewport({ scale: 1 }); const vp = pg.getViewport({ scale: 2.5 });
